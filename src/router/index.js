@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import MV from '../views/MV.vue'
-import My from '../views/My.vue'
-import Friend from '../views/Friend.vue'
+import Home from "../views/Home/index.vue";
+import MV from '../views/MV/index.vue'
+import My from '../views/My/index.vue'
+import Friend from '../views/Friend/index.vue'
 
 
 const routes = [

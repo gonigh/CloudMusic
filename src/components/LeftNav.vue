@@ -42,8 +42,8 @@ const handlePageChange = function (item) {
       margin-top: 0.1rem;
     }
     .icon-background {
-      width: .6rem;
-      height: .6rem;
+      width: .5rem;
+      height: .5rem;
       border-radius: 0.4rem;
       background-color: none;
       display: flex;
