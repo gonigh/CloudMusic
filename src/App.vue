@@ -1,18 +1,48 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="container">
+    <div class="left">
+      <LeftNav></LeftNav>
+    </div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
-  <router-view />
 </template>
-
+<script setup>
+import LeftNav from './components/LeftNav.vue';
+</script>
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.left{
+  width: 1.2rem;
+  height: 100%;
+  background-color: 'white';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: rgb(118, 118, 118) solid .5px;
+}
+.content{
+  flex: 1;
+  // background-color: #2c3e50;
+}
+.icon {
+  width: .4rem;
+  height: .4rem;
+  z-index: 10;
+  // fill: aqua;
 }
 
 #nav {
