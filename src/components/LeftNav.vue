@@ -1,8 +1,7 @@
 <template>
   <div class="leftNav">
     <div class="item" v-for="item in store.pages" :key="item.key" @click="handlePageChange(item)">
-      <!-- <router-link :to="{ path: item.path}"> -->
-      <div class="icon-background" :style="{backgroundColor:item.activate?'red':none}">
+      <div class="icon-background" :style="{backgroundColor: item.activate? 'red': none}">
         <svg class="icon" :style="{fill: item.activate? 'white' :'rgb(113, 115, 116)'}"
           aria-hidden="true">
           <use :xlink:href="item.icon"></use>
@@ -10,7 +9,6 @@
       </div>
 
       <div class="name" :style="{color:item.activate?'red':'rgb(113, 115, 116)'}">{{ item.name }}</div>
-      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -22,6 +20,7 @@ const router = useRouter();
 
 const handlePageChange = function (item) {
   store.changePage(item);
+  console.log(store.pages)
   router.replace({ path: item.path });
 }
 
@@ -45,11 +44,10 @@ const handlePageChange = function (item) {
       width: .5rem;
       height: .5rem;
       border-radius: 0.4rem;
-      background-color: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      background-color: 'none';
       // z-index: 1;
     }
   }

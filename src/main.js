@@ -1,6 +1,13 @@
 import { createPinia } from "pinia";
+import { Tab, Tabs } from "vant";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import 'vant/lib/index.css';
 
-createApp(App).use(router).use(createPinia()).mount("#app");
+const app = createApp(App);
+app.use(router);
+app.use(createPinia());
+app.use(Tabs);
+app.use(Tab);
+app.mount("#app");
