@@ -32,11 +32,11 @@ import LeftNav from './components/LeftNav.vue';
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: rgb(118, 118, 118) solid .5px;
+  border-right: rgba(118, 118, 118,0.5) solid .5px;
 }
 .content{
-  flex: 1;
-  // background-color: #2c3e50;
+  flex-grow: 1;
+  background-color: #2c3e50;
 }
 .icon {
   width: .4rem;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin: .5rem 0;">
         <Banner></Banner>
     </div>
 </template>

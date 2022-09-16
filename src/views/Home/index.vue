@@ -9,6 +9,9 @@
           <span>搜索</span>
         </div>
       </template>
+      <template #nav-bottom>
+        <div style="height: 1px;border-bottom: rgba(118, 118, 118,0.5) solid .5px;"></div>
+      </template>
       <van-tab title="推荐">
         <recommend></recommend>
       </van-tab>
@@ -28,7 +31,7 @@ const active = ref(0);
 </script>
 
 <style lang="less" scoped>
-.top{
+.top {
   --van-tabs-line-height: 1.2rem;
   --van-tab-font-size: 0.3rem;
 }
@@ -40,12 +43,13 @@ const active = ref(0);
   margin-right: 0.6rem;
   margin-left: 0.4rem;
   border-radius: 0.3rem;
-  background-color: rgb(214, 224, 233);
+  background-color: rgba(214, 224, 233,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   color: #919191;
-  .icon{
+
+  .icon {
     margin-right: .1rem;
     width: .3rem;
     height: .3rem;
