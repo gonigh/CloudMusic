@@ -9,7 +9,9 @@
           <span>搜索</span>
         </div>
       </template>
-      <van-tab title="推荐">推荐</van-tab>
+      <van-tab title="推荐">
+        <recommend></recommend>
+      </van-tab>
       <van-tab title="歌单">歌单</van-tab>
       <van-tab title="电台">电台</van-tab>
       <van-tab title="排行榜">排行榜</van-tab>
@@ -20,19 +22,24 @@
 
 <script setup>
 import { ref } from 'vue';
+import Recommend from './Recommend.vue';
 const active = ref(0);
+
 </script>
 
 <style lang="less" scoped>
 .top{
-  --van-tabs-line-height: 0.8rem;
-  --van-tab-font-size: 0.2rem;
+  --van-tabs-line-height: 1.2rem;
+  --van-tab-font-size: 0.3rem;
 }
 
 .search {
   width: 30%;
-  margin: 0.15rem;
-  border-radius: 0.25rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.2rem;
+  margin-right: 0.6rem;
+  margin-left: 0.4rem;
+  border-radius: 0.3rem;
   background-color: rgb(214, 224, 233);
   display: flex;
   justify-content: center;
@@ -40,8 +47,8 @@ const active = ref(0);
   color: #919191;
   .icon{
     margin-right: .1rem;
-    width: .2rem;
-    height: .2rem;
+    width: .3rem;
+    height: .3rem;
     fill: #919191;
   }
 }

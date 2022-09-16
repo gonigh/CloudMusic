@@ -7,7 +7,7 @@ import Friend from '../views/Friend/index.vue'
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     component: Home,
   },{

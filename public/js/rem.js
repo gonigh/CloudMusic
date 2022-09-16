@@ -13,7 +13,7 @@ function remSize () {
     /* 设置rem，
     750px--> 1rem=100px
     */
-    document.documentElement.style.fontSize = (deviceBasis / 15) + 'px'
+    document.documentElement.style.fontSize = (deviceBasis / 23.6) + 'px'
     /* 设置字体大小 */
     document.querySelector('body').style.fontSize = 0.2 + 'rem'
   }

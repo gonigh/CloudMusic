@@ -7,7 +7,7 @@ export const useStore = defineStore("music-store", {
       curPage: 0,
       pages: [{
         key: 0,
-        path: "/home",
+        path: "/",
         icon: "#icon-yinle",
         name: "发现",
         activate:true

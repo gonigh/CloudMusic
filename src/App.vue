@@ -26,7 +26,7 @@ import LeftNav from './components/LeftNav.vue';
   height: 100%;
 }
 .left{
-  width: 1.2rem;
+  width: 1.6rem;
   height: 100%;
   background-color: 'white';
   display: flex;
