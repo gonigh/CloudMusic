@@ -18,6 +18,7 @@ import { useStore } from '../store'
 const store = useStore();
 const router = useRouter();
 
+// eslint-disable-next-line no-unused-vars
 const handlePageChange = function (item) {
   store.changePage(item);
   console.log(store.pages)

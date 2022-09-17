@@ -7,21 +7,23 @@
 <script setup>
 import { onMounted } from 'vue';
 import { getBanner } from '../../api/HomeAPI';
-
+// import h from '../../utils/snabbdom/h'
+// import patch from '../../utils/snabbdom/patch'
 onMounted(() => {
     let dom = document.getElementById("banner");
     dom.style.position = "relative";
     dom.style.height = "3.7rem";
     dom.style.width = "100%"
-    let allWidth = dom.style.width;
-    console.log(allWidth)
+    // let vnode = h("ul", {},"");
+    // console.log(vnode)
+    
     let dots = document.getElementById("dots");
     let cur_dot;
     let sz = new Array();
     getBanner(3).then(res => {
         // console.log(res.data);
         const data = res.data;
-        let zi=10;
+        let zi = 10;
         data.banners.forEach(item => {
             let cur_li = document.createElement("li");
             let cur_img = document.createElement("img");
@@ -61,17 +63,16 @@ onMounted(() => {
             dots.appendChild(dot);
         });
         let len = sz.length - 1;
-        // 左移34em
 
-        sz[len - 1].style.left="50%",
-        sz[len - 1].style.marginLeft = "-4rem";
+        sz[len - 1].style.left = "50%",
+            sz[len - 1].style.marginLeft = "-4rem";
         sz[len - 1].style.zIndex = 100;
         sz[len - 1].style.transform = "scale(1.3)";
-        sz[len].style.left="unset"
-        sz[len].style.right="0"
+        sz[len].style.left = "unset"
+        sz[len].style.right = "0"
 
-        cur_dot=len-1;
-        dots.children[cur_dot].style.backgroundColor= "red"
+        cur_dot = len - 1;
+        dots.children[cur_dot].style.backgroundColor = "red"
         setInterval(next, 4000);
 
     })
@@ -82,26 +83,26 @@ onMounted(() => {
         sz.pop();
         sz.unshift(give_up);
         for (let i = 0; i <= len; i++) {
-            let zi = parseInt(sz[i].style.zIndex)+1;
-            if(zi>10+len) sz[i].style.zIndex = 10;
+            let zi = parseInt(sz[i].style.zIndex) + 1;
+            if (zi > 10 + len) sz[i].style.zIndex = 10;
             dots.children[i].style.backgroundColor = "#919191"
         }
-        
-        // 左移20em
-        sz[0].style.right="unset";
-        sz[0].style.left="0";
 
-        sz[len - 1].style.left="50%",
-        sz[len - 1].style.marginLeft = "-4rem";
+        // 左移20em
+        sz[0].style.right = "unset";
+        sz[0].style.left = "0";
+
+        sz[len - 1].style.left = "50%",
+            sz[len - 1].style.marginLeft = "-4rem";
         sz[len - 1].style.zIndex = 100;
         sz[len - 1].style.transform = "scale(1.3)";
-        sz[len].style.marginLeft="0";
+        sz[len].style.marginLeft = "0";
         sz[len].style.transform = "unset";
-        sz[len].style.left="unset"
-        sz[len].style.right="0"
+        sz[len].style.left = "unset"
+        sz[len].style.right = "0"
 
-        cur_dot = (cur_dot+1)%sz.length;
-        dots.children[cur_dot].style.backgroundColor= "red"
+        cur_dot = (cur_dot + 1) % sz.length;
+        dots.children[cur_dot].style.backgroundColor = "red"
     }
 
     // const pre = function(){

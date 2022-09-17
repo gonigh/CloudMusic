@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="left">
+    <div class="container-left">
       <LeftNav></LeftNav>
     </div>
     <div class="content">
@@ -25,9 +25,10 @@ import LeftNav from './components/LeftNav.vue';
   width: 100%;
   height: 100%;
 }
-.left{
+.container-left{
   width: 1.6rem;
   height: 100%;
+  position: fixed;
   background-color: 'white';
   display: flex;
   justify-content: center;
@@ -35,8 +36,9 @@ import LeftNav from './components/LeftNav.vue';
   border-right: rgba(118, 118, 118,0.5) solid .5px;
 }
 .content{
+  margin-left: 1.6rem;
   flex-grow: 1;
-  background-color: #2c3e50;
+  // background-color: #2c3e50;
 }
 .icon {
   width: .4rem;

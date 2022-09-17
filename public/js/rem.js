@@ -11,7 +11,8 @@ function remSize () {
       deviceBasis = 1200
     }
     /* 设置rem，
-    750px--> 1rem=100px
+    1180px--> 1rem=50px
+    
     */
     document.documentElement.style.fontSize = (deviceBasis / 23.6) + 'px'
     /* 设置字体大小 */
