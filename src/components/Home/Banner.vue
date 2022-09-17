@@ -1,22 +1,23 @@
 <template>
-    <div class="content">
+    <div class="banner-content">
         <ul id="banner"></ul>
         <ul id="dots"></ul>
     </div>
 </template>
 <script setup>
+
 import { onMounted } from 'vue';
 import { getBanner } from '../../api/HomeAPI';
-// import h from '../../utils/snabbdom/h'
-// import patch from '../../utils/snabbdom/patch'
+
 onMounted(() => {
     let dom = document.getElementById("banner");
     dom.style.position = "relative";
-    dom.style.height = "3.7rem";
+    dom.style.height = "4.7rem";
     dom.style.width = "100%"
-    // let vnode = h("ul", {},"");
-    // console.log(vnode)
-    
+    dom.style.overflow = "hidden"
+    dom.style.paddingTop = ".8rem"
+
+
     let dots = document.getElementById("dots");
     let cur_dot;
     let sz = new Array();
@@ -104,33 +105,36 @@ onMounted(() => {
         cur_dot = (cur_dot + 1) % sz.length;
         dots.children[cur_dot].style.backgroundColor = "red"
     }
+    /**
+      const pre = function(){
+        let len = sz.length-1;
+        let give_up=sz[0];
+        sz.shift();
+        sz.push(give_up);
+        for(let i=0;i<=len;i++){
+            sz[i].style.zIndex = i;
+            sz[i].style.left = "50%";
+            sz[i].style.transform="scale(1)";
+            sz[i].style.marginLeft=0;
+        }
+        // 左移20em
+        sz[len - 2].style.marginLeft = "-34em";
+        sz[len - 1].style.zIndex = 100;
+        sz[len - 1].style.marginLeft = "-14em";
+        sz[len - 1].style.transform = "scale(1.3)";
+        sz[len].style.marginLeft = "6em";
+    }
+     */
 
-    // const pre = function(){
-    //     let len = sz.length-1;
-    //     let give_up=sz[0];
-    //     sz.shift();
-    //     sz.push(give_up);
-    //     for(let i=0;i<=len;i++){
-    //         sz[i].style.zIndex = i;
-    //         sz[i].style.left = "50%";
-    //         sz[i].style.transform="scale(1)";
-    //         sz[i].style.marginLeft=0;
-    //     }
-    //     // 左移20em
-    //     sz[len - 2].style.marginLeft = "-34em";
-    //     sz[len - 1].style.zIndex = 100;
-    //     sz[len - 1].style.marginLeft = "-14em";
-    //     sz[len - 1].style.transform = "scale(1.3)";
-    //     sz[len].style.marginLeft = "6em";
-    // }
+
 
 })
 
 </script>
 <style lang="less" scoped>
-.content {
+.banner-content {
     width: 100%;
-    padding: 3em 1em;
+    padding: 0 1em;
     // background-color: aqua;
 }
 

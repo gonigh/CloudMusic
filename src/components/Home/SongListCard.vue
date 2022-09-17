@@ -11,7 +11,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import changeCount from '../../utils/changeCount'
 
 const props = defineProps({
@@ -29,12 +29,19 @@ onMounted(()=>{
     img.style.width=props.cardWidth;
     name.style.width=props.cardWidth;
 })
-
+watch(()=>props.cardWidth,(newValue,oldValue)=>{
+    console.log(newValue)
+    let dom = document.getElementById(props.id);
+    let img = dom.children[0];
+    let name = dom.children[2];
+    img.style.width=props.cardWidth;
+    name.style.width=props.cardWidth;
+})
 </script>
 <style lang="less" scoped>
     
 .song-list{
-    
+    height: 5.4rem;
     padding: .1rem;
     position: relative;
     overflow: hidden;
@@ -47,6 +54,9 @@ onMounted(()=>{
             color: white;
             text-align: center;
         }
+    }
+    .song-list-name{
+        font-size: 1.5em;
     }
     
 }
