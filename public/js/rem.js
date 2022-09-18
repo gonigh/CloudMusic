@@ -21,8 +21,6 @@ function remSize () {
   remSize()
   /* 当窗口发生变化 */
   window.onresize = function () {
-    window.clientWidth = document.documentElement.clientWidth
-    // console.log(window.clientWidth)
     remSize()
   }
   

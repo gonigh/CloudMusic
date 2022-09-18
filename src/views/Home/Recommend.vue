@@ -40,7 +40,6 @@ window.onresize=function(){
 }
 onMounted(() => {
     getRecommendSongList(10).then(res => {
-        console.log(res)
         state.songList = res.data.result
         changeSongList();
     })

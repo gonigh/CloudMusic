@@ -22,6 +22,9 @@ const props = defineProps({
     cardWidth: String
 })
 const playCount = changeCount(props.playCount);
+/**
+ * 设置歌单宽度
+ */
 onMounted(()=>{
     let dom = document.getElementById(props.id);
     let img = dom.children[0];
@@ -29,8 +32,10 @@ onMounted(()=>{
     img.style.width=props.cardWidth;
     name.style.width=props.cardWidth;
 })
+/**
+ * 监听宽度变化，窗口宽度改变后歌单宽度随之改变
+ */
 watch(()=>props.cardWidth,(newValue,oldValue)=>{
-    console.log(newValue)
     let dom = document.getElementById(props.id);
     let img = dom.children[0];
     let name = dom.children[2];

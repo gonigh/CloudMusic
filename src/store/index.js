@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
 
 export const useStore = defineStore("music-store", {
+  
   state: () => {
     return {
-      id: 1,
+      /**
+       * 当前所在主页面
+       */
       curPage: 0,
+      /**
+       * 页面信息，控制激活状态
+       */
       pages: [{
         key: 0,
         path: "/",
@@ -29,11 +35,19 @@ export const useStore = defineStore("music-store", {
         icon: "#icon-pengyou",
         name: "朋友",
         activate:false
-      }]
+      }],
+      /**
+       * 右侧是否弹出
+       */
+      rightOpen: true
     };
   },
   getters: {},
   actions: {
+    /**
+     * 页面跳转
+     * @param {*} item 
+     */
     changePage(item){
       this.pages[this.curPage].activate=false;
       this.pages[item.key].activate=true;

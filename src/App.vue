@@ -6,10 +6,25 @@
     <div class="content">
       <router-view></router-view>
     </div>
+    <van-popup 
+    :show = "store.rightOpen" 
+    position = "right" 
+    :overlay = false
+    :lock-scroll = false
+    >
+    neit
+    <div id="right-zoom"></div>
+  </van-popup>
   </div>
 </template>
 <script setup>
 import LeftNav from './components/LeftNav.vue';
+import { useStore } from './store';
+const store = useStore();
+const popupStyle = {
+  width: "40%"
+}
+
 </script>
 <style lang="less">
 * {
@@ -17,7 +32,8 @@ import LeftNav from './components/LeftNav.vue';
   padding: 0;
   box-sizing: border-box;
 }
-.container{
+
+.container {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -25,7 +41,8 @@ import LeftNav from './components/LeftNav.vue';
   width: 100%;
   height: 100%;
 }
-.container-left{
+
+.container-left {
   width: 1.6rem;
   height: 100%;
   position: fixed;
@@ -33,30 +50,24 @@ import LeftNav from './components/LeftNav.vue';
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: rgba(118, 118, 118,0.5) solid .5px;
+  border-right: rgba(118, 118, 118, 0.5) solid .5px;
 }
-.content{
+
+.content {
   margin-left: 1.6rem;
   flex-grow: 1;
-  // background-color: #2c3e50;
 }
+
 .icon {
   width: .4rem;
   height: .4rem;
   z-index: 10;
-  // fill: aqua;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.van-popup--right{
+  height: 100%;
+  width: 45%;
+}
+#right-zoom{
+  
 }
 </style>
