@@ -24,7 +24,7 @@ const openRight = function () {
  * @param {*} e 
  */
 const rightTouchStart = (e) => {
-    if(e.target != state.dom) return;
+    // if(e.target != state.dom) return;
     state.rightStart = e.touches[0].pageX;
 }
 
@@ -49,8 +49,8 @@ const throttle = function (fn, threshold = 100) {
  * 触摸移动过程
  */
 const handleMove = throttle((e) => {
-    if(e.target != state.dom) return;
-    let rightDom = e.target;
+    // if(e.target != state.dom) return;
+    let rightDom = state.dom;
     let moveDis = e.touches[0].pageX - state.rightStart;
     if (moveDis < 0) moveDis = 0;
     rightDom.style.transform = `translate(${moveDis}px,-50%)`
@@ -61,7 +61,7 @@ const handleMove = throttle((e) => {
  * @param {*} e 
  */
 const rightTouchEnd = (e) => {
-    if(e.target != state.dom) return;
+    // if(e.target != state.dom) return;
     let totalWidth = document.documentElement.clientWidth;
     let contentWidth = totalWidth*0.45;
     let threshold = contentWidth/2;
