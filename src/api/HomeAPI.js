@@ -45,3 +45,16 @@ export function searchSong(keywords, limit = 30, offset = 0, type = 1) {
     },
   });
 }
+
+/**
+ * 获取歌单详情
+ * @param {*} id 
+ * @returns 
+ */
+export function getSongListDetail(id){
+  return request.get("/playlist/detail",{
+    params:{
+      id
+    }
+  })
+}

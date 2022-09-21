@@ -9,7 +9,7 @@
     </MyCard>
     <div v-show="store.rightOpen">
         <MyPopup>
-            <SongListDetail :id="store.curSongList"></SongListDetail>
+            <SongListDetail :id="store.curSongList.id"></SongListDetail>
         </MyPopup>
     </div>
 
