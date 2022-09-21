@@ -13,6 +13,8 @@ const state = {};
 const openRight = function () {
     state.dom = document.getElementById("right-zoom");
     state.dom.style.transform = "translate(0,-50%)";
+    state.dom.style.boxShadow = "-1px 0 10px rgba(18,18,18,.2)";
+
     state.dom.addEventListener("touchstart",rightTouchStart,true);
     state.dom.addEventListener("touchmove",handleMove,true);
     state.dom.addEventListener("touchend",rightTouchEnd,true);
