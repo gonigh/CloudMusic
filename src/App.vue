@@ -6,24 +6,14 @@
     <div class="content">
       <router-view></router-view>
     </div>
-    <van-popup 
-    :show = "store.rightOpen" 
-    position = "right" 
-    :overlay = false
-    :lock-scroll = false
-    >
-    neit
-    <div id="right-zoom"></div>
-  </van-popup>
+    
   </div>
 </template>
 <script setup>
 import LeftNav from './components/LeftNav.vue';
 import { useStore } from './store';
 const store = useStore();
-const popupStyle = {
-  width: "40%"
-}
+
 
 </script>
 <style lang="less">
@@ -63,11 +53,11 @@ const popupStyle = {
   height: .4rem;
   z-index: 10;
 }
-.van-popup--right{
+
+.van-popup--right {
   height: 100%;
   width: 45%;
+  background-color: aqua;
 }
-#right-zoom{
-  
-}
+
 </style>

@@ -1,13 +1,13 @@
 <template>
-    <div class="content">MV</div>
-  </template>
+  <div></div>
+</template>
   
-  <script setup>
+<script setup>
+
+</script>
   
-  </script>
-  
-  <style lang="less" scoped>
-    .content{
-      transform: translateX(50%);
-    }
-  </style>
+<style lang="less" scoped>
+.content {
+  transform: translateX(50%);
+}
+</style>

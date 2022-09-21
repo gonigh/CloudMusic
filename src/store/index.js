@@ -39,7 +39,12 @@ export const useStore = defineStore("music-store", {
       /**
        * 右侧是否弹出
        */
-      rightOpen: true
+      rightOpen: false,
+
+      /**
+       * 播放歌单列表
+       */
+      songList: []
     };
   },
   getters: {},
@@ -52,6 +57,21 @@ export const useStore = defineStore("music-store", {
       this.pages[this.curPage].activate=false;
       this.pages[item.key].activate=true;
       this.curPage=item.key
+    },
+
+    /**
+     * 打开歌单
+     */
+    openSongList(item){
+      console.log(this.rightOpen)
+      this.rightOpen = true
+    },
+
+    /**
+     * 关闭歌单
+     */
+    closeSongList(item){
+      this.rightOpen = false
     }
   },
 });
