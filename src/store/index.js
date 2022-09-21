@@ -57,6 +57,10 @@ export const useStore = defineStore("music-store", {
         commentCount: Number,
         shareCount: Number,
         songList: Array,
+        creator:{
+          name: String,
+          avatar: String
+        }
       },
       /**
        * 播放歌单列表
@@ -83,7 +87,7 @@ export const useStore = defineStore("music-store", {
       console.log(this.rightOpen);
       
       if (!this.curSongList || this.curSongList.id == id) return;
-      this.curSongList.id = id;
+      
       const res = await getSongListDetail(id);
       console.log(res.data.playlist);
       const data = res.data.playlist;
@@ -92,8 +96,10 @@ export const useStore = defineStore("music-store", {
       this.curSongList.subscribedCount = data.subscribedCount;
       this.curSongList.commentCount = data.commentCount;
       this.curSongList.shareCount = data.shareCount;
-
+      this.curSongList.creator.name = data.creator.nickname;
+      this.curSongList.creator.avatar = data.creator.avatarUrl;
       this.rightOpen = true;
+      this.curSongList.id = id;
     },
 
     /**
