@@ -1,5 +1,5 @@
 <template>
-    <div :id="props.id" class="song-list">
+    <div :id="props.id" class="song-list" @click="handleOpenSongList">
         <img :src="props.pic" />
         <div class="song-list-play-count">
             <svg class="icon" style="height:10px" aria-hidden="true">
@@ -12,8 +12,10 @@
 </template>
 <script setup>
 import { onMounted, watch } from 'vue';
+import { useStore } from '../../store';
 import changeCount from '../../utils/changeCount'
 
+const store = useStore();
 const props = defineProps({
     name: String,
     pic: String,
@@ -42,6 +44,12 @@ watch(()=>props.cardWidth,(newValue,oldValue)=>{
     img.style.width=props.cardWidth;
     name.style.width=props.cardWidth;
 })
+
+const handleOpenSongList = function(){
+    console.log(props.id.slice(10))
+    store.openSongList(parseInt(props.id.slice(10)));
+    
+}
 </script>
 <style lang="less" scoped>
     

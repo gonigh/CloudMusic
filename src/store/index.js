@@ -42,6 +42,10 @@ export const useStore = defineStore("music-store", {
       rightOpen: false,
 
       /**
+       * 当前打开歌单
+       */
+      curSongList: null,
+      /**
        * 播放歌单列表
        */
       songList: []
@@ -65,6 +69,7 @@ export const useStore = defineStore("music-store", {
     openSongList(item){
       console.log(this.rightOpen)
       this.rightOpen = true
+      this.curSongList=item
     },
 
     /**
@@ -72,6 +77,8 @@ export const useStore = defineStore("music-store", {
      */
     closeSongList(item){
       this.rightOpen = false
+      this.curSongList=null;
     }
+
   },
 });

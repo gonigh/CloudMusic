@@ -3,12 +3,16 @@
         <Banner></Banner>
     </div>
     <MyCard title="推荐">
-        <SongListCard v-for="item in state.showSongList" v-bind:key="item.id" 
-        :id="'song-list-'+item.id"
-            :play-count="item.playCount" :name="item.name" 
-            :card-width="cardWidth" :pic="item.picUrl">
+        <SongListCard v-for="item in state.showSongList" v-bind:key="item.id" :id="'song-list-'+item.id"
+            :play-count="item.playCount" :name="item.name" :card-width="cardWidth" :pic="item.picUrl">
         </SongListCard>
     </MyCard>
+    <div v-show="store.rightOpen">
+        <MyPopup>
+            <SongListDetail :id="store.curSongList"></SongListDetail>
+        </MyPopup>
+    </div>
+
 </template>
 <script setup>
 import Banner from "../../components/Home/Banner.vue";
@@ -16,26 +20,27 @@ import MyCard from "../../components/MyCard.vue";
 import { getRecommendSongList } from '../../api/HomeAPI'
 import { ref, onMounted, reactive, watch } from "vue";
 import SongListCard from "../../components/Home/SongListCard.vue";
+import MyPopup from "../../components/MyPopup.vue";
+import SongListDetail from "../../components/Home/SongListDetail.vue";
+import { useStore } from "../../store";
 const state = reactive({
     songList: [],
-    showSongList :[]
+    showSongList: []
 })
+const store = useStore();
 
-// watch(()=>window.clientWidth,(newValue,oldLValue)=>{
-//     console.log(1)
-// })
 const cardWidth = ref((document.documentElement.clientWidth - 160) / 5 + "px")
-const changeSongList = function(){
+const changeSongList = function () {
     let c_width = document.documentElement.clientWidth;
     if (c_width > 1000) {
         cardWidth.value = (c_width - 160) / 5 + "px";
         state.showSongList = state.songList
     } else {
         cardWidth.value = (c_width - 160) / 4 + "px";
-        state.showSongList = state.songList.slice(0,8);
+        state.showSongList = state.songList.slice(0, 8);
     }
 }
-window.onresize=function(){
+window.onresize = function () {
     changeSongList();
 }
 onMounted(() => {

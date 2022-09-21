@@ -1,9 +1,7 @@
 <template>
     <van-popup id="right-zoom" :show="store.rightOpen" position="right" :overlay=false :lock-scroll=false
         teleport="div.container" @opened="openRight">
-        <div id="right-child">
 
-        </div>
         <slot></slot>
     </van-popup>
 </template>
@@ -74,8 +72,6 @@ const rightTouchEnd = (e) => {
         state.dom.style.transform = "translate(0,-50%)"
     }
 }
-
-
 
 const store = useStore();
 </script>
