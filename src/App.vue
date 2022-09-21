@@ -6,12 +6,14 @@
     <div class="content">
       <router-view></router-view>
     </div>
-    
+    <FooterMusic></FooterMusic>
   </div>
+  
 </template>
 <script setup>
 import LeftNav from './components/LeftNav.vue';
 import { useStore } from './store';
+import FooterMusic from './components/FooterMusic.vue';
 const store = useStore();
 
 
@@ -40,7 +42,7 @@ const store = useStore();
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: rgba(118, 118, 118, 0.5) solid .5px;
+  border-right: solid .5px rgba(118, 118, 118, 0.5);
 }
 
 .content {
