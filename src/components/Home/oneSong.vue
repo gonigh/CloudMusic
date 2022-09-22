@@ -25,7 +25,6 @@ import MyIcon from '../MyIcon.vue';
 const props = defineProps({
     song: Object
 })
-console.log(props.song.mv)
 
 let songInfo = "";
 props.song.authors.forEach((item, i) => {
@@ -35,7 +34,7 @@ props.song.authors.forEach((item, i) => {
     }
 })
 songInfo = songInfo.concat(" - ");
-songInfo = songInfo.concat(props.song.albumName);
+songInfo = songInfo.concat(props.song.album.name);
 </script>
 <style lang="less" scoped>
 .one-song {

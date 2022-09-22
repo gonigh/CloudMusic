@@ -37,7 +37,7 @@
                 </div>
             </div>
             <OneSong v-for="(item,i) in store.curSongList.songList" :key="item.id" 
-                :song="item">
+                :song="item" @click="handlePlaySong(item)">
                 <template #left>
                     <div class="song-list-index">{{i+1}}</div>
                 </template>
@@ -57,6 +57,11 @@ const props = defineProps({
 const store = useStore();
 
 let downNums = ref([])
+
+/**
+ * 转换收藏量、评论数、分享数数据，并且每次打开新歌单重新运行
+ * @param {*} cur 
+ */
 const numChange = (cur) => {
 
     downNums.value = []
@@ -75,6 +80,10 @@ const numChange = (cur) => {
     downNums.value.push({ key: 4, icon: icon4, num: num4 });
 }
 numChange(store.curSongList);
+
+/**
+ * 监听当前歌单，一旦歌单歌单切换数据重新获取
+ */
 watch(() => store.curSongList.id, () => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     if (dom) {
@@ -85,12 +94,18 @@ watch(() => store.curSongList.id, () => {
     numChange(store.curSongList)
 })
 
+/**
+ * 根据歌单封面渲染背景图
+ */
 onMounted(() => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     dom.style.backgroundImage = `url(${store.curSongList.picUrl})`
     dom.style.backgroundSize = "cover"
 })
 
+const handlePlaySong = (item)=>{
+    store.playSong(item)
+}
 
 </script>
 <style lang="less">
@@ -181,7 +196,7 @@ onMounted(() => {
 
 .song-list-detail-content {
     padding: .2rem;
-
+    margin-bottom: 2rem;
     .play-all {
         margin: .2rem;
         font-size: .4rem;

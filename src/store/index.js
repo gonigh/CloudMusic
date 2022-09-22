@@ -58,10 +58,10 @@ export const useStore = defineStore("music-store", {
         shareCount: Number,
         songCount: Number,
         songList: Array,
-        creator:{
+        creator: {
           name: String,
-          avatar: String
-        }
+          avatar: String,
+        },
       },
       /**
        * 播放歌单列表
@@ -69,18 +69,31 @@ export const useStore = defineStore("music-store", {
       playList: [],
 
       /**
+       * 当前播放歌曲在播放列表中的index
+       */
+      curIndex: -1,
+
+      /**
        * 当前播放歌曲
        */
-      curPlay:{
-        id:Number,
-        name:String,
-        authors:Array,
-        album:{
-          id:Number,
-          name:String,
-          picUrl:String
-        }
-      }
+      curPlay: {
+        flag: false,
+        id: Number,
+        name: String,
+        authors: Array,
+        mv: Number,
+        duration:Number,
+        album: {
+          id: Number,
+          name: String,
+          picUrl: String,
+        },
+      },
+
+      /**
+       * 当前播放时间
+       */
+      curTime:Number
     };
   },
   getters: {},
@@ -99,12 +112,11 @@ export const useStore = defineStore("music-store", {
      * 打开歌单
      */
     async openSongList(id) {
-      
       if (!this.curSongList || this.curSongList.id == id) return;
-      
+
       const res = await getSongListDetail(id);
       const data = res.data.playlist;
-      console.log(data)
+      console.log(data);
       //歌单信息
       this.curSongList.songCount = data.trackCount;
       this.curSongList.name = data.name;
@@ -117,20 +129,23 @@ export const useStore = defineStore("music-store", {
 
       //歌单歌曲信息
       let pl = await getSongListPlayList(id);
-      console.log(pl.data.songs)
-      this.curSongList.songList = pl.data.songs.map(item=>{
+      console.log(pl.data.songs);
+      this.curSongList.songList = pl.data.songs.map((item) => {
         let t = {};
         let album = {};
         album.id = item.al.id;
         album.name = item.al.name;
         album.picUrl = item.al.picUrl;
-        t.album=album;
+        t.album = album;
         t.id = item.id;
-        t.name=item.name;
-        t.mv=item.mv;
-        t.authors = item.ar.map(i=>{return {id:i.id,name:i.name}});
+        t.name = item.name;
+        t.mv = item.mv;
+        t.duration = item.dt;
+        t.authors = item.ar.map((i) => {
+          return { id: i.id, name: i.name };
+        });
         return t;
-      })
+      });
       this.rightOpen = true;
       this.curSongList.id = id;
     },
@@ -141,6 +156,19 @@ export const useStore = defineStore("music-store", {
     closeSongList(item) {
       this.rightOpen = false;
       this.curSongList = null;
+    },
+
+    /**
+     * 播放歌曲
+     */
+    playSong(item) {
+      this.curPlay = item;
+      this.curPlay.flag = true;
+      this.curTime=0;
+      if (this.curSongList != null) {
+        this.playList = this.curSongList.songList;
+        this.curIndex = this.playList.indexOf(item);
+      }
     },
   },
 });
