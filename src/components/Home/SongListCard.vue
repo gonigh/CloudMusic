@@ -46,9 +46,7 @@ watch(()=>props.cardWidth,(newValue,oldValue)=>{
 })
 
 const handleOpenSongList = function(){
-    console.log(props.id.slice(10))
     store.openSongList(parseInt(props.id.slice(10)));
-    
 }
 </script>
 <style lang="less" scoped>

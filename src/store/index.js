@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getSongListDetail } from "../api/HomeAPI";
+import { getSongListDetail, getSongListPlayList } from "../api/HomeAPI";
 
 export const useStore = defineStore("music-store", {
   state: () => {
@@ -56,6 +56,7 @@ export const useStore = defineStore("music-store", {
         subscribedCount: Number,
         commentCount: Number,
         shareCount: Number,
+        songCount: Number,
         songList: Array,
         creator:{
           name: String,
@@ -66,6 +67,20 @@ export const useStore = defineStore("music-store", {
        * 播放歌单列表
        */
       playList: [],
+
+      /**
+       * 当前播放歌曲
+       */
+      curPlay:{
+        id:Number,
+        name:String,
+        authors:Array,
+        album:{
+          id:Number,
+          name:String,
+          picUrl:String
+        }
+      }
     };
   },
   getters: {},
@@ -84,13 +99,14 @@ export const useStore = defineStore("music-store", {
      * 打开歌单
      */
     async openSongList(id) {
-      console.log(this.rightOpen);
       
       if (!this.curSongList || this.curSongList.id == id) return;
       
       const res = await getSongListDetail(id);
-      console.log(res.data.playlist);
       const data = res.data.playlist;
+      console.log(data)
+      //歌单信息
+      this.curSongList.songCount = data.trackCount;
       this.curSongList.name = data.name;
       this.curSongList.picUrl = data.coverImgUrl;
       this.curSongList.subscribedCount = data.subscribedCount;
@@ -98,6 +114,22 @@ export const useStore = defineStore("music-store", {
       this.curSongList.shareCount = data.shareCount;
       this.curSongList.creator.name = data.creator.nickname;
       this.curSongList.creator.avatar = data.creator.avatarUrl;
+
+      //歌单歌曲信息
+      let pl = await getSongListPlayList(id);
+      console.log(pl.data.songs)
+      this.curSongList.songList = pl.data.songs.map(item=>{
+        let t = {};
+        let album = {};
+        album.id = item.al.id;
+        album.name = item.al.name;
+        album.picUrl = item.al.picUrl;
+        t.album=album;
+        t.id = item.id;
+        t.name=item.name;
+        t.authors = item.ar.map(i=>{return {id:i.id,name:i.name}});
+        return t;
+      })
       this.rightOpen = true;
       this.curSongList.id = id;
     },

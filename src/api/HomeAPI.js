@@ -48,13 +48,27 @@ export function searchSong(keywords, limit = 30, offset = 0, type = 1) {
 
 /**
  * 获取歌单详情
- * @param {*} id 
- * @returns 
+ * @param {*} id
+ * @returns
  */
-export function getSongListDetail(id){
-  return request.get("/playlist/detail",{
-    params:{
-      id
-    }
-  })
+export function getSongListDetail(id) {
+  return request.get("/playlist/detail", {
+    params: {
+      id,
+    },
+  });
+}
+
+/**
+ * 获取歌单歌曲信息
+ * @param {*} id
+ * @returns
+ */
+export function getSongListPlayList(id,limit=0) {
+  return request.get("/playlist/track/all", {
+    params: {
+      id,
+      limit
+    },
+  });
 }

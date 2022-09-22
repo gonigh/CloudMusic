@@ -27,15 +27,32 @@
             </div>
         </div>
         <div class="song-list-detail-content">
-
+            <div class="play-all">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-bofang"></use>
+                </svg>
+                <div style="margin: 0 .2rem;">播放全部</div>
+                <div class="song-count">
+                    (共{{store.curSongList.songCount}}首)
+                </div>
+            </div>
+            <OneSong v-for="(item,i) in store.curSongList.songList" :key="item.id" 
+                :id="item.id"
+                :album-name="item.album.name" 
+                :authors="item.authors" 
+                :name="item.name">
+                <template #left>
+                    <div class="song-list-index">{{i+1}}</div>
+                </template>
+            </OneSong>
         </div>
     </div>
-
 </template>
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../../store/index'
 import changeCount from '../../utils/changeCount';
+import OneSong from './oneSong.vue';
 
 const props = defineProps({
     id: Number,
@@ -64,7 +81,7 @@ numChange(store.curSongList);
 watch(() => store.curSongList.id, () => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     if (dom) {
-        
+
         dom.style.backgroundImage = `url(${store.curSongList.picUrl})`
         dom.style.backgroundSize = "cover"
     }
@@ -75,7 +92,6 @@ onMounted(() => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     dom.style.backgroundImage = `url(${store.curSongList.picUrl})`
     dom.style.backgroundSize = "cover"
-
 })
 
 
@@ -100,20 +116,11 @@ onMounted(() => {
     padding: .5rem;
     margin-top: 1rem;
     backdrop-filter: blur(20px);
-    // ::before {
-    //     width: 100%;
-    //     height: 100%;
-    //     background: inherit;
-    //     backdrop-filter: blur(20px);
-    //     content: "";
-    //     position: absolute;
-    //     top: 0;
-    //     left: 0;
-    // }
-    .background-blur{
+
+    .background-blur {
         width: 100%;
         height: 100%;
-        background-color: rgba(155,155,155,.3);
+        background-color: rgba(155, 155, 155, .3);
         backdrop-filter: blur(60px);
         content: "";
         position: absolute;
@@ -130,9 +137,14 @@ onMounted(() => {
         .up-right {
             padding: .4rem;
             z-index: 10;
+
             .name {
                 margin-left: .2rem;
                 color: white;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
             }
 
             .creator {
@@ -141,6 +153,7 @@ onMounted(() => {
                 align-items: center;
                 color: rgb(204, 204, 204);
                 z-index: 10;
+
                 .creator-name {
                     font-size: .3rem;
                     margin: 0 .1rem;
@@ -152,7 +165,6 @@ onMounted(() => {
                     border-radius: .3rem;
                 }
             }
-
         }
 
         img {
@@ -167,6 +179,32 @@ onMounted(() => {
         margin-top: .4rem;
         display: flex;
         justify-content: space-around;
+    }
+}
+
+.song-list-detail-content {
+    padding: .2rem;
+
+    .play-all {
+        margin: .2rem;
+        font-size: .4rem;
+        display: flex;
+        align-items: center;
+
+        .song-count {
+            line-height: 100%;
+            font-size: .8em;
+            color: rgb(164, 164, 164);
+        }
+    }
+    .song-list-index{
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        line-height: 100%;
+        text-align: center;
+        font-size: .3rem;
+        color: rgb(164, 164, 164);
     }
 }
 </style>
