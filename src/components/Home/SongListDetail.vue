@@ -37,10 +37,7 @@
                 </div>
             </div>
             <OneSong v-for="(item,i) in store.curSongList.songList" :key="item.id" 
-                :id="item.id"
-                :album-name="item.album.name" 
-                :authors="item.authors" 
-                :name="item.name">
+                :song="item">
                 <template #left>
                     <div class="song-list-index">{{i+1}}</div>
                 </template>

@@ -127,6 +127,7 @@ export const useStore = defineStore("music-store", {
         t.album=album;
         t.id = item.id;
         t.name=item.name;
+        t.mv=item.mv;
         t.authors = item.ar.map(i=>{return {id:i.id,name:i.name}});
         return t;
       })
