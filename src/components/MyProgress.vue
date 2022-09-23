@@ -1,11 +1,21 @@
 <template>
     <div class="progress">
-        <input type="range" min="0" :max="store.curPlay.duration" v-model="store.currentTime" step="0.05" />
+        <input type="range" min="0" :max="store.curPlay.duration" :value="store.curTime" @input="handleJump" step="0.05" />
     </div>
 </template>
 <script setup>
 import { useStore } from '../store/index'
+
 const store = useStore();
+
+/**
+ * 跳转
+ * @param {*} e 
+ */
+const handleJump = (e)=>{
+    store.playGo(e.target.value)
+}
+
 </script>
 <style lang="less" scoped>
 input[type=range] {

@@ -1,5 +1,10 @@
 import { defineStore } from "pinia";
-import { getSongListDetail, getSongListPlayList, getSongUrl } from "../api/HomeAPI";
+import { ref } from "vue";
+import {
+  getSongListDetail,
+  getSongListPlayList,
+  getSongUrl,
+} from "../api/HomeAPI";
 
 export const useStore = defineStore("music-store", {
   state: () => {
@@ -82,7 +87,7 @@ export const useStore = defineStore("music-store", {
         name: String,
         authors: Array,
         mv: Number,
-        duration:Number,
+        duration: Number,
         album: {
           id: Number,
           name: String,
@@ -93,11 +98,30 @@ export const useStore = defineStore("music-store", {
       /**
        * 当前播放时间
        */
-      curTime:Number
+      curTime: Number,
+
+      /**
+       * 定时器
+       */
+      timer: Number,
+
+      /**
+       * 音频播放器元素
+       */
+      audio:ref(null),
     };
   },
   getters: {},
   actions: {
+
+    /**
+     * 记录播放器元素
+     */
+    setAudio(audio){
+      this.audio = audio
+      console.log([this.audio])
+    },
+
     /**
      * 页面跳转
      * @param {*} item
@@ -164,23 +188,45 @@ export const useStore = defineStore("music-store", {
     async playSong(item) {
       this.curPlay = item;
       this.curPlay.flag = true;
-      this.curTime=0;
-      
-      let res = await getSongUrl(item.id)
-      this.curPlay.url = res.data.data[0].url
+      this.curTime = 0;
+
+      //获取歌曲url
+      let res = await getSongUrl(item.id);
+      this.curPlay.url = res.data.data[0].url;
       if (this.curSongList != null) {
         this.playList = this.curSongList.songList;
         this.curIndex = this.playList.indexOf(item);
       }
-      console.log(this.curPlay)
+      console.log([this.audio])
+      // 设置定时器获取当前播放时间
+      this.timer = setInterval(() => {
+        this.curTime = this.audio.currentTime*1000;
+      }, 250);
     },
 
     /**
      * 播放/暂停
      */
-    playOrStop(){
+    playOrStop() {
+      if (this.curPlay.flag) {
+        this.audio.pause();
+        clearInterval(this.timer);
+      } else {
+        this.audio.play();
+        this.timer = setInterval(() => {
+          this.curTime = this.audio.currentTime*1000;
+        }, 250);
+      }
       this.curPlay.flag = !this.curPlay.flag;
       console.log(this.curPlay.flag);
+    },
+
+    /**
+     * 跳转播放
+     */
+    playGo(value){
+      this.curTime = value;
+      this.audio.currentTime = value/1000;
     }
   },
 });
