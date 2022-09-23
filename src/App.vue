@@ -9,13 +9,18 @@
     <FooterMusic></FooterMusic>
   </div>
   <audio autoplay ref="audio" :src="musicStore.curPlay.url"></audio>
-  
+  <van-popup :show="musicStore.bottomOpen" position="bottom" style="z-index: 3001;">
+    <Music></Music>
+  </van-popup>
+
 </template>
 <script setup>
 import LeftNav from './components/LeftNav.vue';
 import { useMusicStore } from './store/musicStore';
 import FooterMusic from './components/FooterMusic.vue';
 import { onMounted, ref } from 'vue';
+import Music from './views/Music/index.vue';
+
 const musicStore = useMusicStore();
 
 const audio = ref(null);
@@ -68,6 +73,12 @@ onMounted(()=>{
   height: 100%;
   width: 45%;
   background-color: aqua;
+}
+.van-popup--bottom {
+  height: 100%;
+  width: 100%;
+  background-color: aqua;
+  z-index: 3001;
 }
 
 </style>

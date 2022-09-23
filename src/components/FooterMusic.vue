@@ -1,5 +1,5 @@
 <template>
-    <div v-show="musicStore.curIndex!=-1" class="footer-music">
+    <div v-show="musicStore.curIndex!=-1" class="footer-music" @click="musicStore.bottomOpen=true">
         <div class="footer-music-pic">
             <img :src="musicStore.curPlay.album.picUrl">
         </div>
@@ -33,15 +33,13 @@
 
 </template>
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useMusicStore } from '../store/musicStore';
 import MyIcon from './MyIcon.vue';
 import MyProgress from './MyProgress.vue';
 
 const musicStore = useMusicStore();
-let authors = ref("");
 
-if (musicStore.curIndex != -1) authors.value = musicStore.curPlay.authors.map(i => i.name).join('/')
 /**
  * 初试状态隐藏，播放歌曲后弹出
  */

@@ -83,6 +83,11 @@ export const useMusicStore = defineStore("music-store", {
        * 右侧是否弹出
        */
       rightOpen: false,
+      
+      /**
+       * 底部弹出音乐界面
+       */
+      bottomOpen: false
     };
   },
   getters: {

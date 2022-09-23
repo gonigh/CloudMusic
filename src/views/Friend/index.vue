@@ -10,10 +10,7 @@ import { useMusicStore } from '../../store/musicStore';
 import { searchSong } from '../../api/HomeAPI';
 const musicStore = useMusicStore()
 const buttonClick = function () {
-  musicStore.openSongList();
-  searchSong("lemon").then(res=>{
-    console.log(res)
-  })
+  musicStore.bottomOpen = !musicStore.bottomOpen;
 }
 </script>
   
