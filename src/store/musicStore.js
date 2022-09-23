@@ -83,7 +83,7 @@ export const useMusicStore = defineStore("music-store", {
        * 右侧是否弹出
        */
       rightOpen: false,
-      
+
       /**
        * 底部弹出音乐界面
        */
@@ -157,7 +157,7 @@ export const useMusicStore = defineStore("music-store", {
     /**
      * 关闭歌单
      */
-    closeSongList(item) {
+    closeSongList() {
       this.rightOpen = false;
       this.curSongList = null;
     },
@@ -166,6 +166,7 @@ export const useMusicStore = defineStore("music-store", {
      * 播放歌曲
      */
     async playSong(item) {
+      localStorage.setItem("test",JSON.stringify(item));
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime = 0;

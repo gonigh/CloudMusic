@@ -84,7 +84,8 @@ numChange(musicStore.curSongList);
 /**
  * 监听当前歌单，一旦歌单歌单切换数据重新获取
  */
-watch(() => musicStore.curSongList.id, () => {
+watch(() => musicStore.curSongList, () => {
+    if(!musicStore.curSongList) return;
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     if (dom) {
 

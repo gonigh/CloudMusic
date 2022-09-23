@@ -1,5 +1,5 @@
 <template>
-    <div v-show="musicStore.curIndex!=-1" class="footer-music" @click="musicStore.bottomOpen=true">
+    <div id="footer-music" v-show="musicStore.curIndex!=-1" class="footer-music" @click="handleBottomOpen">
         <div class="footer-music-pic">
             <img :src="musicStore.curPlay.album.picUrl">
         </div>
@@ -50,6 +50,11 @@ watch(() => musicStore.curIndex, (value) => {
     }
 })
 
+const handleBottomOpen = (e)=>{
+    console.log([e.target])
+    if(e.target.id=="footer-music" || e.target.tagName=="IMG")
+        musicStore.bottomOpen=true;
+}
 
 /**
  * 播放暂停按钮
