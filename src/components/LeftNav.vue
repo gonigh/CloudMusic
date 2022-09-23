@@ -1,6 +1,6 @@
 <template>
   <div class="leftNav">
-    <div class="item" v-for="item in store.pages" :key="item.key" @click="handlePageChange(item)">
+    <div class="item" v-for="item in pageStore.pages" :key="item.key" @click="handlePageChange(item)">
       <div class="icon-background" :style="{backgroundColor: item.activate? 'red': none}">
         <svg class="icon" :style="{fill: item.activate? 'white' :'rgb(113, 115, 116)'}"
           aria-hidden="true">
@@ -14,13 +14,13 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { useStore } from '../store'
-const store = useStore();
+import { usePageStore } from '../store/pageStore'
+const pageStore = usePageStore();
 const router = useRouter();
 
 // eslint-disable-next-line no-unused-vars
 const handlePageChange = function (item) {
-  store.changePage(item);
+  pageStore.changePage(item);
   router.replace({ path: item.path });
 }
 

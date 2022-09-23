@@ -1,23 +1,23 @@
 <template>
-    <div v-show="store.curIndex!=-1" class="footer-music">
+    <div v-show="musicStore.curIndex!=-1" class="footer-music">
         <div class="footer-music-pic">
-            <img :src="store.curPlay.album.picUrl">
+            <img :src="musicStore.curPlay.album.picUrl">
         </div>
         <div class="footer-music-control">
-            <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem" @click="store.preSong"></MyIcon>
-            <MyIcon :icon="store.curPlay.flag?'#icon-zanting2':'#icon-zanting1'" fill="red" width=".7rem"
+            <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem" @click="musicStore.preSong"></MyIcon>
+            <MyIcon :icon="musicStore.curPlay.flag?'#icon-zanting2':'#icon-zanting1'" fill="red" width=".7rem"
                 @click="handlePlayOrStop"></MyIcon>
-            <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem" @click="store.nextSong"></MyIcon>
+            <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem" @click="musicStore.nextSong"></MyIcon>
         </div>
         <div class="footer-music-middle">
             <div class="footer-music-info">
                 <div>
-                    <text style="font-size: .36rem;">{{store.curPlay.name}}</text>
-                    <text style="color: #919191;font-size: .36rem;"> - {{authors}}</text>
+                    <text style="font-size: .36rem;">{{musicStore.curPlay.name}}</text>
+                    <text style="color: #919191;font-size: .36rem;"> - {{musicStore.authors}}</text>
                 </div>
                 <div>
-                    <text>{{state.curTime}}</text>
-                    <text style="color: #919191;">/{{state.duration}}</text>
+                    <text>{{musicStore.formatCurTime}}</text>
+                    <text style="color: #919191;">/{{musicStore.formatDuration}}</text>
                 </div>
             </div>
             <MyProgress></MyProgress>
@@ -25,7 +25,7 @@
         <div class="footer-music-right">
             <MyIcon icon="#icon-aixin" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
-            <MyIcon :icon="store.playType[store.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)" @click="store.changePlayType"></MyIcon>
+            <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)" @click="musicStore.changePlayType"></MyIcon>
             <MyIcon icon="#icon-24gf-playlistMusic3" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
         </div>
 
@@ -34,48 +34,30 @@
 </template>
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { useStore } from '../store';
+import { useMusicStore } from '../store/musicStore';
 import MyIcon from './MyIcon.vue';
-import changeTime from '../utils/changeTime'
 import MyProgress from './MyProgress.vue';
 
-const store = useStore();
+const musicStore = useMusicStore();
 let authors = ref("");
-const audio = ref(null)
-const state = reactive({
-    duration: String,
-    curTime: String
-})
 
-
-if (store.curIndex != -1) authors.value = store.curPlay.authors.map(i => i.name).join('/')
+if (musicStore.curIndex != -1) authors.value = musicStore.curPlay.authors.map(i => i.name).join('/')
 /**
  * 初试状态隐藏，播放歌曲后弹出
  */
-watch(() => store.curIndex, (value) => {
-    if (store.curPlay.flag) {
+watch(() => musicStore.curIndex, (value) => {
+    if (musicStore.curPlay.flag) {
         let dom = document.getElementsByClassName("footer-music")[0];
         dom.style.transform = "unset";
     }
 })
 
-watch(() => store.curPlay.id, () => {
-    authors.value = store.curPlay.authors.map(i => i.name).join('/')
-    state.duration = changeTime(store.curPlay.duration);
-})
-
-/**
- * 通过计算属性转换时间
- */
-state.curTime = computed(() => {
-    return changeTime(store.curTime);
-})
 
 /**
  * 播放暂停按钮
  */
 const handlePlayOrStop = () => {
-    store.playOrStop(audio);
+    musicStore.playOrStop();
 }
 
 

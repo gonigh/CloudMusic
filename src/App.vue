@@ -8,19 +8,19 @@
     </div>
     <FooterMusic></FooterMusic>
   </div>
-  <audio autoplay ref="audio" :src="store.curPlay.url"></audio>
+  <audio autoplay ref="audio" :src="musicStore.curPlay.url"></audio>
   
 </template>
 <script setup>
 import LeftNav from './components/LeftNav.vue';
-import { useStore } from './store';
+import { useMusicStore } from './store/musicStore';
 import FooterMusic from './components/FooterMusic.vue';
 import { onMounted, ref } from 'vue';
-const store = useStore();
+const musicStore = useMusicStore();
 
 const audio = ref(null);
 onMounted(()=>{
-  store.setAudio(audio);
+  musicStore.setAudio(audio);
 })
 
 

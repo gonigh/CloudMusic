@@ -12,10 +12,10 @@
 </template>
 <script setup>
 import { onMounted, watch } from 'vue';
-import { useStore } from '../../store';
+import { useMusicStore } from '../../store/musicStore';
 import changeCount from '../../utils/changeCount'
 
-const store = useStore();
+const musicStore = useMusicStore();
 const props = defineProps({
     name: String,
     pic: String,
@@ -46,7 +46,7 @@ watch(()=>props.cardWidth,(newValue,oldValue)=>{
 })
 
 const handleOpenSongList = function(){
-    store.openSongList(parseInt(props.id.slice(10)));
+    musicStore.openSongList(parseInt(props.id.slice(10)));
 }
 </script>
 <style lang="less" scoped>

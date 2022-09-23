@@ -7,9 +7,9 @@
             :play-count="item.playCount" :name="item.name" :card-width="cardWidth" :pic="item.picUrl">
         </SongListCard>
     </MyCard>
-    <div v-show="store.rightOpen">
+    <div v-show="pageStore.rightOpen">
         <MyPopup>
-            <SongListDetail :id="store.curSongList.id"></SongListDetail>
+            <SongListDetail :id="musicStore.curSongList.id"></SongListDetail>
         </MyPopup>
     </div>
 
@@ -22,12 +22,16 @@ import { ref, onMounted, reactive, watch } from "vue";
 import SongListCard from "../../components/Home/SongListCard.vue";
 import MyPopup from "../../components/MyPopup.vue";
 import SongListDetail from "../../components/Home/SongListDetail.vue";
-import { useStore } from "../../store";
+import { useMusicStore } from "../../store/musicStore";
+import { usePageStore } from "../../store/pageStore";
+
 const state = reactive({
     songList: [],
     showSongList: []
 })
-const store = useStore();
+
+const musicStore = useMusicStore();
+const pageStore = usePageStore();
 
 const cardWidth = ref((document.documentElement.clientWidth - 160) / 5 + "px")
 const changeSongList = function () {

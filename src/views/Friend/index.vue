@@ -6,11 +6,11 @@
   
 <script setup>
 import MyPopup from '../../components/MyPopup.vue';
-import { useStore } from '../../store';
+import { useMusicStore } from '../../store/musicStore';
 import { searchSong } from '../../api/HomeAPI';
-const store = useStore()
+const musicStore = useMusicStore()
 const buttonClick = function () {
-  store.openSongList();
+  musicStore.openSongList();
   searchSong("lemon").then(res=>{
     console.log(res)
   })

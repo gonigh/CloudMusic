@@ -1,12 +1,12 @@
 <template>
-    <van-popup id="right-zoom" :show="store.rightOpen" position="right" :overlay=false :lock-scroll=false
+    <van-popup id="right-zoom" :show="musicStore.rightOpen" position="right" :overlay=false :lock-scroll=false
         teleport="div.container" @opened="openRight">
 
         <slot></slot>
     </van-popup>
 </template>
 <script setup>
-import { useStore } from '../store';
+import { useMusicStore } from '../store/musicStore';
 
 const state = {};
 
@@ -68,14 +68,14 @@ const rightTouchEnd = (e) => {
     let dis = e.changedTouches[0].pageX - state.rightStart;
     if(dis > threshold) {
         state.dom.style.transform=`translate(${contentWidth}px,-50%)`
-        store.closeSongList()
+        musicStore.closeSongList()
         
     }else{
         state.dom.style.transform = "translate(0,-50%)"
     }
 }
 
-const store = useStore();
+const musicStore = useMusicStore();
 </script>
 <style lang="less" scoped>
 

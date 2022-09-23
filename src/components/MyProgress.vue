@@ -1,19 +1,19 @@
 <template>
     <div class="progress">
-        <input type="range" min="0" :max="store.curPlay.duration" :value="store.curTime" @input="handleJump" step="0.05" />
+        <input type="range" min="0" :max="musicStore.curPlay.duration" :value="musicStore.curTime" @input="handleJump" step="0.05" />
     </div>
 </template>
 <script setup>
-import { useStore } from '../store/index'
+import { useMusicStore } from '../store/musicStore'
 
-const store = useStore();
+const musicStore = useMusicStore();
 
 /**
  * 跳转
  * @param {*} e 
  */
 const handleJump = (e)=>{
-    store.playGo(e.target.value)
+    musicStore.playGo(e.target.value)
 }
 
 </script>

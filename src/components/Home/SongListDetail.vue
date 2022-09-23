@@ -4,12 +4,12 @@
         <div class="song-list-detail-info">
             <div class="background-blur"></div>
             <div class="up">
-                <img :src="store.curSongList.picUrl" />
+                <img :src="musicStore.curSongList.picUrl" />
                 <div class="up-right">
-                    <div class="name">{{store.curSongList.name}}</div>
+                    <div class="name">{{musicStore.curSongList.name}}</div>
                     <div class="creator">
-                        <img :src="store.curSongList.creator.avatar" />
-                        <div class="creator-name">{{store.curSongList.creator.name}}</div>
+                        <img :src="musicStore.curSongList.creator.avatar" />
+                        <div class="creator-name">{{musicStore.curSongList.creator.name}}</div>
                         <svg class="icon" :style="{fill: 'rgb(204, 204, 204)',width:'.3rem',height:'.3rem'}"
                             aria-hidden="true">
                             <use xlink:href="#icon-youjiantou"></use>
@@ -33,10 +33,10 @@
                 </svg>
                 <div style="margin: 0 .2rem;">播放全部</div>
                 <div class="song-count">
-                    (共{{store.curSongList.songCount}}首)
+                    (共{{musicStore.curSongList.songCount}}首)
                 </div>
             </div>
-            <OneSong v-for="(item,i) in store.curSongList.songList" :key="item.id" 
+            <OneSong v-for="(item,i) in musicStore.curSongList.songList" :key="item.id" 
                 :song="item" @click="handlePlaySong(item)">
                 <template #left>
                     <div class="song-list-index">{{i+1}}</div>
@@ -47,14 +47,14 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from 'vue';
-import { useStore } from '../../store/index'
+import { useMusicStore } from '../../store/musicStore'
 import changeCount from '../../utils/changeCount';
 import OneSong from './oneSong.vue';
 
 const props = defineProps({
     id: Number,
 })
-const store = useStore();
+const musicStore = useMusicStore();
 
 let downNums = ref([])
 
@@ -79,19 +79,19 @@ const numChange = (cur) => {
     downNums.value.push({ key: 3, icon: icon3, num: num3 });
     downNums.value.push({ key: 4, icon: icon4, num: num4 });
 }
-numChange(store.curSongList);
+numChange(musicStore.curSongList);
 
 /**
  * 监听当前歌单，一旦歌单歌单切换数据重新获取
  */
-watch(() => store.curSongList.id, () => {
+watch(() => musicStore.curSongList.id, () => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
     if (dom) {
 
-        dom.style.backgroundImage = `url(${store.curSongList.picUrl})`
+        dom.style.backgroundImage = `url(${musicStore.curSongList.picUrl})`
         dom.style.backgroundSize = "cover"
     }
-    numChange(store.curSongList)
+    numChange(musicStore.curSongList)
 })
 
 /**
@@ -99,12 +99,12 @@ watch(() => store.curSongList.id, () => {
  */
 onMounted(() => {
     let dom = document.getElementsByClassName("song-list-detail-info")[0]
-    dom.style.backgroundImage = `url(${store.curSongList.picUrl})`
+    dom.style.backgroundImage = `url(${musicStore.curSongList.picUrl})`
     dom.style.backgroundSize = "cover"
 })
 
 const handlePlaySong = (item)=>{
-    store.playSong(item)
+    musicStore.playSong(item)
 }
 
 </script>

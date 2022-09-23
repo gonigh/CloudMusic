@@ -5,52 +5,11 @@ import {
   getSongListPlayList,
   getSongUrl,
 } from "../api/HomeAPI";
+import changeTime from "../utils/changeTime";
 
-export const useStore = defineStore("music-store", {
+export const useMusicStore = defineStore("music-store", {
   state: () => {
     return {
-      /**
-       * 当前所在主页面
-       */
-      curPage: 0,
-      /**
-       * 页面信息，控制激活状态
-       */
-      pages: [
-        {
-          key: 0,
-          path: "/",
-          icon: "#icon-yinle",
-          name: "发现",
-          activate: true,
-        },
-        {
-          key: 1,
-          path: "/mv",
-          icon: "#icon-PlayIconFilled",
-          name: "MV",
-          activate: false,
-        },
-        {
-          key: 2,
-          path: "/my",
-          icon: "#icon-wode",
-          name: "我的",
-          activate: false,
-        },
-        {
-          key: 3,
-          path: "/friend",
-          icon: "#icon-pengyou",
-          name: "朋友",
-          activate: false,
-        },
-      ],
-      /**
-       * 右侧是否弹出
-       */
-      rightOpen: false,
-
       /**
        * 当前打开歌单
        */
@@ -119,9 +78,26 @@ export const useStore = defineStore("music-store", {
         "#icon-danquxunhuan",
       ],
       playTypeIndex: 0,
+
+      /**
+       * 右侧是否弹出
+       */
+      rightOpen: false,
     };
   },
-  getters: {},
+  getters: {
+    formatCurTime: (state) => {
+      return changeTime(state.curTime);
+    },
+    formatDuration: (state) => {
+      return changeTime(state.curPlay.duration);
+    },
+    authors: (state) => {
+      if (state.curIndex!=-1)
+        return state.curPlay.authors.map((i) => i.name).join("/");
+      else return null;
+    },
+  },
   actions: {
     /**
      * 记录播放器元素
@@ -129,16 +105,6 @@ export const useStore = defineStore("music-store", {
     setAudio(audio) {
       this.audio = audio;
       console.log([this.audio]);
-    },
-
-    /**
-     * 页面跳转
-     * @param {*} item
-     */
-    changePage(item) {
-      this.pages[this.curPage].activate = false;
-      this.pages[item.key].activate = true;
-      this.curPage = item.key;
     },
 
     /**
