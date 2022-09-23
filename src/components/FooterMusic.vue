@@ -4,10 +4,10 @@
             <img :src="store.curPlay.album.picUrl">
         </div>
         <div class="footer-music-control">
-            <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem"></MyIcon>
+            <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem" @click="store.preSong"></MyIcon>
             <MyIcon :icon="store.curPlay.flag?'#icon-zanting2':'#icon-zanting1'" fill="red" width=".7rem"
                 @click="handlePlayOrStop"></MyIcon>
-            <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem"></MyIcon>
+            <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem" @click="store.nextSong"></MyIcon>
         </div>
         <div class="footer-music-middle">
             <div class="footer-music-info">
@@ -22,8 +22,13 @@
             </div>
             <MyProgress></MyProgress>
         </div>
-        <div class="footer-music-right"></div>
-        
+        <div class="footer-music-right">
+            <MyIcon icon="#icon-aixin" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+            <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+            <MyIcon :icon="store.playType[store.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)" @click="store.changePlayType"></MyIcon>
+            <MyIcon icon="#icon-24gf-playlistMusic3" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+        </div>
+
     </div>
 
 </template>
@@ -38,8 +43,11 @@ const store = useStore();
 let authors = ref("");
 const audio = ref(null)
 const state = reactive({
-    duration: String
+    duration: String,
+    curTime: String
 })
+
+
 if (store.curIndex != -1) authors.value = store.curPlay.authors.map(i => i.name).join('/')
 /**
  * 初试状态隐藏，播放歌曲后弹出
@@ -51,12 +59,14 @@ watch(() => store.curIndex, (value) => {
     }
 })
 
-
 watch(() => store.curPlay.id, () => {
     authors.value = store.curPlay.authors.map(i => i.name).join('/')
     state.duration = changeTime(store.curPlay.duration);
 })
 
+/**
+ * 通过计算属性转换时间
+ */
 state.curTime = computed(() => {
     return changeTime(store.curTime);
 })
@@ -65,14 +75,9 @@ state.curTime = computed(() => {
  * 播放暂停按钮
  */
 const handlePlayOrStop = () => {
-    // console.log([audio.value])
-    // if (store.curPlay.flag) {
-    //     audio.value.pause();
-    // } else {
-    //     audio.value.play();
-    // }
     store.playOrStop(audio);
 }
+
 
 
 </script>
@@ -122,6 +127,13 @@ const handlePlayOrStop = () => {
                 font-size: .3rem;
             }
         }
+    }
+
+    .footer-music-right{
+        width: 3.6rem;
+        padding-left: .4rem;
+        display: flex;
+        justify-content: space-around;
     }
 }
 </style>

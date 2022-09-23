@@ -29,7 +29,6 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance:none;
     height: 6px;
     width: 6px;
     margin-top: -5px;
