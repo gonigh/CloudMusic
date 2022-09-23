@@ -72,3 +72,12 @@ export function getSongListPlayList(id,limit=0) {
     },
   });
 }
+
+export function getSongUrl(id){
+  return request.get("/song/url/v1",{
+    params:{
+      id,
+      level:"standard"
+    }
+  })
+}

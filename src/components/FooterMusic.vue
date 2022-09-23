@@ -5,7 +5,7 @@
         </div>
         <div class="footer-music-control">
             <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem"></MyIcon>
-            <MyIcon icon="#icon-zanting1" fill="red" width=".7rem"></MyIcon>
+            <MyIcon :icon="store.curPlay.flag?'#icon-zanting2':'#icon-zanting1'" fill="red" width=".7rem" @click="handlePlayOrStop"></MyIcon>
             <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem"></MyIcon>
         </div>
         <div class="footer-music-middle">
@@ -19,13 +19,10 @@
                     <text style="color: #919191;">/{{state.duration}}</text>
                 </div>
             </div>
-            <div class="footer-music-progress">
-                <!-- <van-progress :percentage="50" color="red" stroke-width=".04rem" track-color="rgb(218,218,218)"  pivot-text="" ></van-progress> -->
-                <input type="range"  min="0" :max="store.curPlay.duration" v-model="store.currentTime" step="0.05" />
-            </div>
+            <MyProgress></MyProgress>
         </div>
         <div class="footer-music-right"></div>
-        <audio ref="audio" :src="`https://music.163.com/song/media/outer/url?id=${store.curPlay.id}.mp3`"></audio>
+        <audio autoplay ref="audio" :src="store.curPlay.url"></audio>
     </div>
 
 </template>
@@ -34,6 +31,7 @@ import { reactive, ref, watch } from 'vue';
 import { useStore } from '../store';
 import MyIcon from './MyIcon.vue';
 import changeTime from '../utils/changeTime'
+import MyProgress from './MyProgress.vue';
 
 const store = useStore();
 let authors = ref("");
@@ -59,7 +57,17 @@ watch(()=>store.curPlay.id,()=>{
     state.duration = changeTime(store.curPlay.duration);
 })
 
-
+/**
+ * 播放暂停按钮
+ */
+const handlePlayOrStop = ()=>{
+    if(store.curPlay.flag){
+        audio.value.pause();
+    }else{
+        audio.value.play();
+    }
+    store.playOrStop();
+}
 
 
 </script>
@@ -104,12 +112,7 @@ watch(()=>store.curPlay.id,()=>{
                 font-size: .3rem;
             }
         }
-
-        .footer-music-progress input{
-            width: 100%;
-            background-color: red;
-            color: red;
-        }
     }
 }
+
 </style>

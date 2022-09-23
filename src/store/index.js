@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getSongListDetail, getSongListPlayList } from "../api/HomeAPI";
+import { getSongListDetail, getSongListPlayList, getSongUrl } from "../api/HomeAPI";
 
 export const useStore = defineStore("music-store", {
   state: () => {
@@ -161,14 +161,26 @@ export const useStore = defineStore("music-store", {
     /**
      * 播放歌曲
      */
-    playSong(item) {
+    async playSong(item) {
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime=0;
+      
+      let res = await getSongUrl(item.id)
+      this.curPlay.url = res.data.data[0].url
       if (this.curSongList != null) {
         this.playList = this.curSongList.songList;
         this.curIndex = this.playList.indexOf(item);
       }
+      console.log(this.curPlay)
     },
+
+    /**
+     * 播放/暂停
+     */
+    playOrStop(){
+      this.curPlay.flag = !this.curPlay.flag;
+      console.log(this.curPlay.flag);
+    }
   },
 });
