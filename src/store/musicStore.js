@@ -178,7 +178,6 @@ export const useMusicStore = defineStore("music-store", {
         this.playList = this.curSongList.songList;
         this.curIndex = this.playList.indexOf(item);
       }
-      console.log([this.audio]);
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
         this.curTime = this.audio.currentTime * 1000;
