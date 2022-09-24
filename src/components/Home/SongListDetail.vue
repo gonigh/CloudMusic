@@ -128,8 +128,7 @@ const handlePlaySong = (item)=>{
 .song-list-detail-info {
     padding: .5rem;
     margin-top: 1rem;
-    backdrop-filter: blur(20px);
-
+    position: relative;
     .background-blur {
         width: 100%;
         height: 100%;
