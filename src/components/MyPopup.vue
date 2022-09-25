@@ -7,7 +7,7 @@
 </template>
 <script setup>
 import { useMusicStore } from '../store/musicStore';
-
+import throttle from '../utils/throttle'
 const state = {};
 
 const openRight = function () {
@@ -28,23 +28,6 @@ const rightTouchStart = (e) => {
     state.rightStart = e.touches[0].pageX;
 }
 
-/**
- * 节流函数
- * @param {*} fn 
- * @param {*} threshhold 
- */
-const throttle = function (fn, threshold = 100) {
-    let timer;
-    let start = new Date();
-    return function () {
-        const current = new Date();
-        timer && clearTimeout(timer);
-        if (current - start >= threshold) {
-            fn.call(this, ...arguments);
-            start = current;
-        }
-    }
-}
 /**
  * 触摸移动过程
  */

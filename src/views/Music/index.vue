@@ -18,7 +18,11 @@
             <img ref="cd" class="cd" src="../../assets/cd.png" />
             <img ref="albumPic" class="album" :src="musicStore.curPlay.album.picUrl">
         </div>
-        <div class="music-lyric">歌词</div>
+        <div ref="lyric" class="music-lyric">
+            <p v-for=" (item,i) in musicStore.curPlay.lyric" :key="item.key" :class="{'p-active':musicStore.curLyricIndex==i}">
+                {{item.content}}
+            </p>
+        </div>
         <div class="music-control">
             <div class="music-control-up">
                 <MyIcon icon="#icon-aixin" width=".5rem" fill="white"></MyIcon>
@@ -48,26 +52,27 @@
 <script setup>
 import { useMusicStore } from '../../store/musicStore';
 import MyIcon from '../../components/MyIcon.vue';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
 
 const musicStore = useMusicStore();
-
+const state = reactive({ curLyric: 0 });
+const lyric = ref(null)
 onMounted(() => {
     let dom = document.getElementById("music-container")
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
-    if(musicStore.curPlay.flag){
-        timer = setInterval(()=>{
+    if (musicStore.curPlay.flag) {
+        timer = setInterval(() => {
             cd.value.style.transform = `rotate(${++curAngle}deg)`
             albumPic.value.style.transform = `rotate(${++curAngle}deg)`
-        },250)
+        }, 250)
     }
 })
 /**
  * 监听歌曲切换
  */
-watch(()=>musicStore.curPlay,()=>{
+watch(() => musicStore.curPlay, () => {
     let dom = document.getElementById("music-container")
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
@@ -80,15 +85,19 @@ let timer;
 let curAngle = 0;
 const cd = ref(null);
 const albumPic = ref(null);
-watch(()=>musicStore.curPlay.flag,(value)=>{
-    if(value){
-        timer = setInterval(()=>{
+watch(() => musicStore.curPlay.flag, (value) => {
+    if (value) {
+        timer = setInterval(() => {
             cd.value.style.transform = `rotate(${++curAngle}deg)`
             albumPic.value.style.transform = `rotate(${++curAngle}deg)`
-        },250)
-    }else{
+        }, 250)
+    } else {
         clearInterval(timer);
     }
+})
+
+watch(()=>musicStore.curLyricIndex,(newValue,oldValue)=>{
+    console.log("index",newValue);
 })
 
 

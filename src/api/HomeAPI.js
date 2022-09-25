@@ -73,11 +73,22 @@ export function getSongListPlayList(id,limit=0) {
   });
 }
 
+/**
+ * 获取歌曲地址
+ */
 export function getSongUrl(id){
   return request.get("/song/url/v1",{
     params:{
       id,
       level:"standard"
+    }
+  })
+}
+
+export function getSongLyric(id){
+  return request.get("/lyric",{
+    params:{
+      id
     }
   })
 }

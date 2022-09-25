@@ -4,6 +4,7 @@ import {
   getSongListDetail,
   getSongListPlayList,
   getSongUrl,
+  getSongLyric,
 } from "../api/HomeAPI";
 import changeTime from "../utils/changeTime";
 
@@ -52,8 +53,12 @@ export const useMusicStore = defineStore("music-store", {
           name: String,
           picUrl: String,
         },
+        lyric: Array,
       },
-
+      /**
+       * 当前歌词id
+       */
+      lyricIndex: 0,
       /**
        * 当前播放时间
        */
@@ -98,6 +103,19 @@ export const useMusicStore = defineStore("music-store", {
         return state.curPlay.authors.map((i) => i.name).join("/");
       else return null;
     },
+    curLyricIndex:(state)=>{
+      if(state.curIndex!=-1){
+        let res;
+        if(state.curTime>state.curPlay.lyric[state.lyricIndex].key){
+          while(state.lyricIndex+1!=state.curPlay.lyric.length && state.curTime>state.curPlay.lyric[state.lyricIndex+1].key) state.lyricIndex++;
+          res = state.lyricIndex;
+        }else{
+          while(state.lyricIndex!=0 && state.curTime<=state.curPlay.lyric[state.lyricIndex].key) state.lyricIndex--;
+          res = state.lyricIndex;
+        }
+        return res;
+      }
+    }
   },
   actions: {
     /**
@@ -170,6 +188,8 @@ export const useMusicStore = defineStore("music-store", {
         this.playList = this.curSongList.songList;
         this.curIndex = this.playList.indexOf(item);
       }
+      this.getLyric(item.id);
+
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
         this.curTime = this.audio.currentTime * 1000;
@@ -179,6 +199,35 @@ export const useMusicStore = defineStore("music-store", {
           this.nextSong();
         }
       }, 250);
+    },
+
+    /**
+     * 异步获取并处理歌词信息
+     * @param {*} id
+     */
+    async getLyric(id) {
+      let lyricList = [];
+      getSongLyric(id).then((res) => {
+        res.data.lrc.lyric.split("\n").map((item) => {
+          if (item == "") return;
+          const matchLyric = /\]/;
+          let list = item.split(matchLyric);
+          let content = list[list.length - 1];
+          for (let i = 0; i < list.length - 1; i++) {
+            let time = list[i];
+            let min = parseInt(time.slice(1, 3));
+            let sec = parseInt(time.slice(4, 6));
+            let ms = parseInt(time.slice(7, 9));
+            let key = min * 60 * 1000 + sec * 1000 + ms * 10;
+            lyricList.push({ key, content });
+          }
+        });
+        lyricList.sort((a, b) => {
+          return a.key - b.key;
+        });
+        this.curPlay.lyric = lyricList;
+        this.curPlay.curLyric = 0;
+      });
     },
 
     /**
@@ -196,7 +245,14 @@ export const useMusicStore = defineStore("music-store", {
       }
       this.curPlay.flag = !this.curPlay.flag;
     },
-
+    
+    /**
+     * 进度条拖动但还未跳转
+     * @param {*} value 
+     */
+    timeChange(value){
+      this.curTime = value;
+    },
     /**
      * 跳转播放
      */
