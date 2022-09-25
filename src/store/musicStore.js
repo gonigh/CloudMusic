@@ -72,11 +72,7 @@ export const useMusicStore = defineStore("music-store", {
       /**
        * 播放方式列表及当前播放方式
        */
-      playType: [
-        "#icon-shunxubofang",
-        "#icon-suijibof",
-        "#icon-danquxunhuan",
-      ],
+      playType: ["#icon-shunxubofang", "#icon-suijibof", "#icon-danquxunhuan"],
       playTypeIndex: 0,
 
       /**
@@ -166,7 +162,6 @@ export const useMusicStore = defineStore("music-store", {
      * 播放歌曲
      */
     async playSong(item) {
-      localStorage.setItem("test", JSON.stringify(item));
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime = 0;
@@ -181,7 +176,11 @@ export const useMusicStore = defineStore("music-store", {
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
         this.curTime = this.audio.currentTime * 1000;
-        
+
+        // 播放结束自动播放下一首
+        if (this.curPlay.duration - this.curTime <= 260) {
+          this.nextSong();
+        }
       }, 250);
     },
 
@@ -199,7 +198,6 @@ export const useMusicStore = defineStore("music-store", {
         }, 250);
       }
       this.curPlay.flag = !this.curPlay.flag;
-      console.log(this.curPlay.flag);
     },
 
     /**
@@ -224,13 +222,18 @@ export const useMusicStore = defineStore("music-store", {
       if (this.playTypeIndex == 0) {
         let nextIndex = (this.curIndex + 1) % this.playList.length;
         this.playSong(this.playList[nextIndex]);
+      } else if (this.playTypeIndex == 1) {
+        let nextIndex = parseInt(Math.random() * this.playList.length);
+        this.playSong(this.playList[nextIndex]);
+      } else {
+        this.audio.currentTime = 0;
       }
     },
     /**
      * 上一首
      */
     preSong() {
-      if (this.playTypeIndex == 0) {
+      if (this.playTypeIndex == 0 || this.playTypeIndex == 1) {
         let preIndex =
           (this.playList.length + this.curIndex - 1) % this.playList.length;
         this.playSong(this.playList[preIndex]);

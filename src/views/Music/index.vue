@@ -48,7 +48,7 @@
 <script setup>
 import { useMusicStore } from '../../store/musicStore';
 import MyIcon from '../../components/MyIcon.vue';
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
 
 const musicStore = useMusicStore();
@@ -59,6 +59,11 @@ onMounted(() => {
     dom.style.backgroundSize = "cover";
 })
 
+watch(()=>musicStore.curPlay,()=>{
+    let dom = document.getElementById("music-container")
+    dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
+    dom.style.backgroundSize = "cover";
+})
 
 </script>
 <style lang="less">
