@@ -81,4 +81,10 @@ onMounted(()=>{
   z-index: 3001;
 }
 
+.van-slider__button{
+    --van-slider-button-width: .16rem;
+    --van-slider-button-height: .16rem;
+    --van-slider-button-background-color: red;
+}
+
 </style>

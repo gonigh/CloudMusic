@@ -87,7 +87,7 @@ export const useMusicStore = defineStore("music-store", {
       /**
        * 底部弹出音乐界面
        */
-      bottomOpen: false
+      bottomOpen: false,
     };
   },
   getters: {
@@ -98,7 +98,7 @@ export const useMusicStore = defineStore("music-store", {
       return changeTime(state.curPlay.duration);
     },
     authors: (state) => {
-      if (state.curIndex!=-1)
+      if (state.curIndex != -1)
         return state.curPlay.authors.map((i) => i.name).join("/");
       else return null;
     },
@@ -166,7 +166,7 @@ export const useMusicStore = defineStore("music-store", {
      * 播放歌曲
      */
     async playSong(item) {
-      localStorage.setItem("test",JSON.stringify(item));
+      localStorage.setItem("test", JSON.stringify(item));
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime = 0;

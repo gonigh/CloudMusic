@@ -15,7 +15,11 @@
             <img ref="albumPic" class="album" :src="musicStore.curPlay.album.picUrl">
         </div>
         <div class="music-lyric">歌词</div>
-        <div class="music-control">控件</div>
+        <div class="music-control">
+            <div class="music-control-up"></div>
+            <div class="music-control-middle"></div>
+            <div class="music-control-down"></div>
+        </div>
     </div>
 </template>
 <script setup>
