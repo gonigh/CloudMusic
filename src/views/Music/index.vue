@@ -48,7 +48,7 @@
 <script setup>
 import { useMusicStore } from '../../store/musicStore';
 import MyIcon from '../../components/MyIcon.vue';
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
 
 const musicStore = useMusicStore();
@@ -58,12 +58,34 @@ onMounted(() => {
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
 })
-
+/**
+ * 监听歌曲切换
+ */
 watch(()=>musicStore.curPlay,()=>{
     let dom = document.getElementById("music-container")
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
 })
+
+/**
+ * 监听是否播放，控制cd转动
+ */
+let timer;
+let curAngle = 0;
+const cd = ref(null);
+const albumPic = ref(null);
+watch(()=>musicStore.curPlay.flag,(value)=>{
+    console.log(value);
+    if(value){
+        timer = setInterval(()=>{
+            cd.value.style.transform = `rotate(${++curAngle}deg)`
+            albumPic.value.style.transform = `rotate(${++curAngle}deg)`
+        },250)
+    }else{
+        clearInterval(timer);
+    }
+})
+
 
 </script>
 <style lang="less">
