@@ -22,7 +22,6 @@ onMounted(() => {
     let cur_dot;
     let sz = new Array();
     getBanner(3).then(res => {
-        // console.log(res.data);
         const data = res.data;
         let zi = 10;
         data.banners.forEach(item => {

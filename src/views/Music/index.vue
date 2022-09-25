@@ -57,6 +57,12 @@ onMounted(() => {
     let dom = document.getElementById("music-container")
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
+    if(musicStore.curPlay.flag){
+        timer = setInterval(()=>{
+            cd.value.style.transform = `rotate(${++curAngle}deg)`
+            albumPic.value.style.transform = `rotate(${++curAngle}deg)`
+        },250)
+    }
 })
 /**
  * 监听歌曲切换
@@ -75,7 +81,6 @@ let curAngle = 0;
 const cd = ref(null);
 const albumPic = ref(null);
 watch(()=>musicStore.curPlay.flag,(value)=>{
-    console.log(value);
     if(value){
         timer = setInterval(()=>{
             cd.value.style.transform = `rotate(${++curAngle}deg)`

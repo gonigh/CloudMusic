@@ -10,14 +10,11 @@ import { useMusicStore } from '../store/musicStore'
 
 const musicStore = useMusicStore();
 
-const curPercentage = ref(musicStore.curTime/musicStore.curPlay.duration);
-console.log(curPercentage.value)
 /**
  * 跳转
  * @param {*} e 
  */
 const handleJump = (e)=>{
-   console.log(musicStore.curPlay.duration,e)
     musicStore.playGo(e)
 }
 

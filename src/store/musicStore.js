@@ -105,7 +105,6 @@ export const useMusicStore = defineStore("music-store", {
      */
     setAudio(audio) {
       this.audio = audio;
-      console.log([this.audio]);
     },
 
     /**
@@ -116,7 +115,6 @@ export const useMusicStore = defineStore("music-store", {
 
       const res = await getSongListDetail(id);
       const data = res.data.playlist;
-      console.log(data);
       //歌单信息
       this.curSongList.songCount = data.trackCount;
       this.curSongList.name = data.name;
@@ -129,7 +127,6 @@ export const useMusicStore = defineStore("music-store", {
 
       //歌单歌曲信息
       let pl = await getSongListPlayList(id);
-      console.log(pl.data.songs);
       this.curSongList.songList = pl.data.songs.map((item) => {
         let t = {};
         let album = {};
