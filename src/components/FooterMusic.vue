@@ -6,7 +6,7 @@
         <div class="footer-music-control">
             <MyIcon icon="#icon-shangyishou" fill="red" width=".4rem" @click="musicStore.preSong"></MyIcon>
             <MyIcon :icon="musicStore.curPlay.flag?'#icon-zanting2':'#icon-zanting1'" fill="red" width=".7rem"
-                @click="handlePlayOrStop"></MyIcon>
+                @click="musicStore.playOrStop"></MyIcon>
             <MyIcon icon="#icon-xiayishou" fill="red" width=".4rem" @click="musicStore.nextSong"></MyIcon>
         </div>
         <div class="footer-music-middle">
@@ -26,7 +26,7 @@
             <MyIcon icon="#icon-aixin" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)" @click="musicStore.changePlayType"></MyIcon>
-            <MyIcon icon="#icon-24gf-playlistMusic3" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+            <MyIcon icon="#icon-bofangliebiao" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
         </div>
 
     </div>
@@ -55,15 +55,6 @@ const handleBottomOpen = (e)=>{
     if(e.target.id=="footer-music" || e.target.tagName=="IMG")
         musicStore.bottomOpen=true;
 }
-
-/**
- * 播放暂停按钮
- */
-const handlePlayOrStop = () => {
-    musicStore.playOrStop();
-}
-
-
 
 </script>
 <style lang="less">

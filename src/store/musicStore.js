@@ -73,8 +73,8 @@ export const useMusicStore = defineStore("music-store", {
        * 播放方式列表及当前播放方式
        */
       playType: [
-        "#icon-24gl-repeat2",
-        "#icon-24gl-shuffle",
+        "#icon-shunxubofang",
+        "#icon-suijibof",
         "#icon-danquxunhuan",
       ],
       playTypeIndex: 0,
@@ -181,6 +181,7 @@ export const useMusicStore = defineStore("music-store", {
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
         this.curTime = this.audio.currentTime * 1000;
+        
       }, 250);
     },
 

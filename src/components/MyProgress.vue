@@ -17,11 +17,14 @@ console.log(curPercentage.value)
  * @param {*} e 
  */
 const handleJump = (e)=>{
-   
+   console.log(musicStore.curPlay.duration,e)
     musicStore.playGo(e)
 }
 
 </script>
 <style lang="less" scoped>
-
+.progress{
+    margin: 0.1rem;
+    width: 100%;
+}
 </style>

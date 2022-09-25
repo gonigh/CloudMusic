@@ -85,6 +85,7 @@ onMounted(()=>{
     --van-slider-button-width: .16rem;
     --van-slider-button-height: .16rem;
     --van-slider-button-background-color: red;
+    --van-slider-bar-heigh:.04rem;
 }
 
 </style>
