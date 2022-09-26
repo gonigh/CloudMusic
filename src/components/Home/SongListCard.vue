@@ -31,6 +31,7 @@ onMounted(()=>{
     let dom = document.getElementById(props.id);
     let img = dom.children[0];
     let name = dom.children[2];
+    dom.style.height =`${parseInt(props.cardWidth.slice(0,-2))*1.3}px`;
     img.style.width=props.cardWidth;
     name.style.width=props.cardWidth;
 })
@@ -41,6 +42,7 @@ watch(()=>props.cardWidth,(newValue,oldValue)=>{
     let dom = document.getElementById(props.id);
     let img = dom.children[0];
     let name = dom.children[2];
+    dom.style.height =`${parseInt(props.cardWidth.slice(0,-2))*1.3}px`;
     img.style.width=props.cardWidth;
     name.style.width=props.cardWidth;
 })
