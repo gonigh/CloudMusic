@@ -19,7 +19,8 @@
             <img ref="albumPic" class="album" :src="musicStore.curPlay.album.picUrl">
         </div>
         <div ref="lyric" class="music-lyric">
-            <p v-for=" (item,i) in musicStore.curPlay.lyric" :key="item.key" :class="{'p-active':musicStore.curLyricIndex==i}">
+            <p v-for=" (item,i) in musicStore.curPlay.lyric" :key="item.key"
+                :class="{'p-active':musicStore.curLyricIndex==i}">
                 {{item.content}}
             </p>
         </div>
@@ -56,7 +57,6 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
 
 const musicStore = useMusicStore();
-const state = reactive({ curLyric: 0 });
 const lyric = ref(null)
 onMounted(() => {
     let dom = document.getElementById("music-container")
@@ -96,8 +96,13 @@ watch(() => musicStore.curPlay.flag, (value) => {
     }
 })
 
-watch(()=>musicStore.curLyricIndex,(newValue,oldValue)=>{
-    console.log("index",newValue);
+watch(() => musicStore.curLyricIndex, (newValue, oldValue) => {
+    console.log("index", newValue, [lyric.value.children[newValue]]);
+    let curP = lyric.value.children[newValue];
+    curP.scrollTop = 10;
+    let offset = curP.offsetTop - lyric.value.offsetHeight/2 + curP.offsetHeight/2;
+    console.log(curP.offsetTop, lyric.value.offsetHeight)
+    lyric.value.scrollTo({top:offset,behavior:'smooth'})
 })
 
 

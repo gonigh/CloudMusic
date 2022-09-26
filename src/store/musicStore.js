@@ -7,7 +7,7 @@ import {
   getSongLyric,
 } from "../api/HomeAPI";
 import changeTime from "../utils/changeTime";
-
+import debounce from "../utils/debounce";
 export const useMusicStore = defineStore("music-store", {
   state: () => {
     return {
@@ -89,6 +89,10 @@ export const useMusicStore = defineStore("music-store", {
        * 底部弹出音乐界面
        */
       bottomOpen: false,
+      /**
+       * 时间锁，为true时定时器不可改变curTime
+       */
+      lock: false,
     };
   },
   getters: {
@@ -103,19 +107,27 @@ export const useMusicStore = defineStore("music-store", {
         return state.curPlay.authors.map((i) => i.name).join("/");
       else return null;
     },
-    curLyricIndex:(state)=>{
-      if(state.curIndex!=-1){
+    curLyricIndex: (state) => {
+      if (state.curIndex != -1) {
         let res;
-        if(state.curTime>state.curPlay.lyric[state.lyricIndex].key){
-          while(state.lyricIndex+1!=state.curPlay.lyric.length && state.curTime>state.curPlay.lyric[state.lyricIndex+1].key) state.lyricIndex++;
+        if (state.curTime > state.curPlay.lyric[state.lyricIndex].key) {
+          while (
+            state.lyricIndex + 1 != state.curPlay.lyric.length &&
+            state.curTime > state.curPlay.lyric[state.lyricIndex + 1].key
+          )
+            state.lyricIndex++;
           res = state.lyricIndex;
-        }else{
-          while(state.lyricIndex!=0 && state.curTime<=state.curPlay.lyric[state.lyricIndex].key) state.lyricIndex--;
+        } else {
+          while (
+            state.lyricIndex != 0 &&
+            state.curTime <= state.curPlay.lyric[state.lyricIndex].key
+          )
+            state.lyricIndex--;
           res = state.lyricIndex;
         }
         return res;
       }
-    }
+    },
   },
   actions: {
     /**
@@ -192,7 +204,7 @@ export const useMusicStore = defineStore("music-store", {
 
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
-        this.curTime = this.audio.currentTime * 1000;
+        if (!this.lock) this.curTime = this.audio.currentTime * 1000;
 
         // 播放结束自动播放下一首
         if (this.curPlay.duration - this.curTime <= 260) {
@@ -240,23 +252,32 @@ export const useMusicStore = defineStore("music-store", {
       } else {
         this.audio.play();
         this.timer = setInterval(() => {
-          this.curTime = this.audio.currentTime * 1000;
+          if (!this.lock) this.curTime = this.audio.currentTime * 1000;
         }, 250);
       }
       this.curPlay.flag = !this.curPlay.flag;
     },
-    
+
+    setLock() {
+      this.lock = true;
+    },
+    setUnLock() {
+      this.lock = false;
+    },
     /**
      * 进度条拖动但还未跳转
-     * @param {*} value 
+     * @param {*} value
      */
-    timeChange(value){
+    timeChange(value) {
+      this.setLock();
       this.curTime = value;
     },
     /**
      * 跳转播放
      */
     playGo(value) {
+      console.log(value);
+      this.setUnLock();
       this.curTime = value;
       this.audio.currentTime = value / 1000;
     },

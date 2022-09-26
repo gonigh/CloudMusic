@@ -20,7 +20,7 @@ const handleJump = (e)=>{
 }
 
 
-const handleChange = throttle(musicStore.timeChange,200);
+const handleChange = throttle(musicStore.timeChange,150);
 
 </script>
 <style lang="less" scoped>
