@@ -1,6 +1,6 @@
 <template>
     <van-popup id="right-zoom" :show="musicStore.rightOpen" position="right" :overlay=false :lock-scroll=false
-        teleport="div.container" @opened="openRight">
+        teleport="div.container" @opened="openRight" @close="closeRight">
 
         <slot></slot>
     </van-popup>
@@ -9,6 +9,7 @@
 import { useMusicStore } from '../store/musicStore';
 import throttle from '../utils/throttle'
 const state = {};
+const musicStore = useMusicStore();
 
 const openRight = function () {
     state.dom = document.getElementById("right-zoom");
@@ -21,7 +22,7 @@ const openRight = function () {
 }
 /**
  * 触摸开始
- * @param {*} e 
+ * @param {*} e
  */
 const rightTouchStart = (e) => {
     // if(e.target != state.dom) return;
@@ -58,7 +59,12 @@ const rightTouchEnd = (e) => {
     }
 }
 
-const musicStore = useMusicStore();
+const closeRight = function(){
+    console.log("close")
+    let container = state.dom.parentElement;
+    container.removeChild(state.dom);
+}
+
 </script>
 <style lang="less" scoped>
 

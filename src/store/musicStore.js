@@ -204,11 +204,12 @@ export const useMusicStore = defineStore("music-store", {
 
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
-        if (!this.lock) this.curTime = this.audio.currentTime * 1000;
-
-        // 播放结束自动播放下一首
-        if (this.curPlay.duration - this.curTime <= 260) {
-          this.nextSong();
+        if (!this.lock) {
+          this.curTime = this.audio.currentTime * 1000;
+          // 播放结束自动播放下一首
+          if (this.curPlay.duration - this.curTime <= 260) {
+            this.nextSong();
+          }
         }
       }, 250);
     },
@@ -237,6 +238,11 @@ export const useMusicStore = defineStore("music-store", {
         lyricList.sort((a, b) => {
           return a.key - b.key;
         });
+        // 最后空出几行
+        let afterSpace = 5;
+        for(let i=0;i<afterSpace;i++){
+          lyricList.push({key: 999999,content:''});
+        }
         this.curPlay.lyric = lyricList;
         this.curPlay.curLyric = 0;
       });
@@ -252,7 +258,13 @@ export const useMusicStore = defineStore("music-store", {
       } else {
         this.audio.play();
         this.timer = setInterval(() => {
-          if (!this.lock) this.curTime = this.audio.currentTime * 1000;
+          if (!this.lock) {
+            this.curTime = this.audio.currentTime * 1000;
+            // 播放结束自动播放下一首
+            if (this.curPlay.duration - this.curTime <= 260) {
+              this.nextSong();
+            }
+          }
         }, 250);
       }
       this.curPlay.flag = !this.curPlay.flag;

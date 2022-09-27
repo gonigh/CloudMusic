@@ -27,5 +27,6 @@ const handleChange = throttle(musicStore.timeChange,150);
 .progress{
     margin: 0.1rem;
     width: 100%;
+    z-index: 10;
 }
 </style>
