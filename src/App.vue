@@ -24,7 +24,7 @@ import Music from './views/Music/index.vue';
 const musicStore = useMusicStore();
 
 const audio = ref(null);
-onMounted(()=>{
+onMounted(() => {
   musicStore.setAudio(audio);
 })
 
@@ -74,6 +74,7 @@ onMounted(()=>{
   width: 45%;
   background-color: aqua;
 }
+
 .van-popup--bottom {
   height: 100%;
   width: 100%;
@@ -81,11 +82,19 @@ onMounted(()=>{
   z-index: 3001;
 }
 
-.van-slider__button{
-    --van-slider-button-width: .16rem;
-    --van-slider-button-height: .16rem;
-    --van-slider-button-background-color: red;
-    --van-slider-bar-heigh:.04rem;
+.van-slider__button {
+  --van-slider-button-width: .16rem;
+  --van-slider-button-height: .16rem;
+  --van-slider-button-background-color: red;
+  --van-slider-bar-heigh: .04rem;
 }
 
+.pop-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  top: 0;
+  left: 0;
+}
 </style>

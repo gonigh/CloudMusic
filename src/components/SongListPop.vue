@@ -3,8 +3,7 @@
         <MyIcon icon="#icon-bofangliebiao" width=".4rem" fill="rgb(148,148,148)" @click="musicStore.setSongListPopover">
         </MyIcon>
         <div v-show="musicStore.songListPopover" ref="songList" class="song-list">
-            <div class="pop-shadow"></div>
-            <div v-for="item in musicStore.playList" :key="item.id">
+            <div class="one-song" v-for="item in musicStore.playList" :key="item.id">
                 {{item.name}}
             </div>
         </div>
@@ -19,16 +18,23 @@ const musicStore = useMusicStore();
 const songList = ref(null)
 const state = reactive({})
 
+const clickPopShadow = (e)=>{
+    // if(e.target.classList.indexOf("pop-shadow")!=-1){}
+    console.log(e.target)
+    musicStore.songListPopover = false;
+}
+
 watch(()=>musicStore.songListPopover,(value)=>{
     if(value){
         let dom = document.createElement('div');
-        dom.classList.add(".pop-shadow");
+        dom.classList.add("pop-shadow");
+        dom.addEventListener("click",clickPopShadow,true);
         state.dom = dom;
-        let body = document.getElemen
-        body.appendChild(dom);
+        let container = document.getElementsByClassName("container")[0];
+        container.appendChild(dom);
     }else{
-        let body = document.getElementsByName("body")[0];
-        body.removeChild(state.dom);
+        let container = document.getElementsByClassName("container")[0];
+        container.removeChild(state.dom);
     }
 })
 
@@ -38,29 +44,20 @@ watch(()=>musicStore.songListPopover,(value)=>{
 .icon-song-list {
     position: relative;
 
-    .pop-shadow {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: 999;
-        top: 0;
-        left: 0;
-    }
-
     .song-list {
-        z-index: 1000;
+        z-index: 4001;
         color: aqua;
         width: 8rem;
         background-color: white;
         height: 10rem;
         overflow: scroll;
-        z-index: 100;
         position: absolute;
         bottom: .8rem;
         right: -.2rem;
         border-radius: .2rem;
 
-        .one-song {}
+        .one-song {
+        }
     }
 }
 </style>
