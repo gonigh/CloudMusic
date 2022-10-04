@@ -89,6 +89,11 @@ export const useMusicStore = defineStore("music-store", {
        * 底部弹出音乐界面
        */
       bottomOpen: false,
+
+      /**
+       * 弹出歌单
+       */
+      songListPopover: false,
       /**
        * 时间锁，为true时定时器不可改变curTime
        */
@@ -182,7 +187,7 @@ export const useMusicStore = defineStore("music-store", {
      */
     closeSongList() {
       this.rightOpen = false;
-      this.curSongList = null;
+      this.curSongList.id = -1;
     },
 
     /**
@@ -196,7 +201,7 @@ export const useMusicStore = defineStore("music-store", {
       //获取歌曲url
       let res = await getSongUrl(item.id);
       this.curPlay.url = res.data.data[0].url;
-      if (this.curSongList != null) {
+      if (this.curSongList.id != -1) {
         this.playList = this.curSongList.songList;
         this.curIndex = this.playList.indexOf(item);
       }
@@ -325,5 +330,9 @@ export const useMusicStore = defineStore("music-store", {
         this.playSong(this.playList[preIndex]);
       }
     },
+
+    setSongListPopover(){
+      this.songListPopover=!this.songListPopover;
+    }
   },
 });

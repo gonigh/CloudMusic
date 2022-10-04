@@ -1,6 +1,6 @@
 <template>
     <van-popup id="right-zoom" :show="musicStore.rightOpen" position="right" :overlay=false :lock-scroll=false
-        teleport="div.container" @opened="openRight" @close="closeRight">
+        teleport="div.container" @opened="openRight" >
 
         <slot></slot>
     </van-popup>
@@ -59,11 +59,7 @@ const rightTouchEnd = (e) => {
     }
 }
 
-const closeRight = function(){
-    console.log("close")
-    let container = state.dom.parentElement;
-    container.removeChild(state.dom);
-}
+
 
 </script>
 <style lang="less" scoped>

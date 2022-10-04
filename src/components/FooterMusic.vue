@@ -25,18 +25,21 @@
         <div class="footer-music-right">
             <MyIcon icon="#icon-aixin" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
-            <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)" @click="musicStore.changePlayType"></MyIcon>
-            <MyIcon icon="#icon-bofangliebiao" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+            <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)"
+                @click="musicStore.changePlayType"></MyIcon>
+
+            
+            <SongListPop></SongListPop>
         </div>
 
     </div>
-
 </template>
 <script setup>
 import { watch } from 'vue';
 import { useMusicStore } from '../store/musicStore';
 import MyIcon from './MyIcon.vue';
 import MyProgress from './MyProgress.vue';
+import SongListPop from './SongListPop.vue';
 
 const musicStore = useMusicStore();
 
@@ -50,9 +53,9 @@ watch(() => musicStore.curIndex, (value) => {
     }
 })
 
-const handleBottomOpen = (e)=>{
-    if(e.target.id=="footer-music" || e.target.tagName=="IMG")
-        musicStore.bottomOpen=true;
+const handleBottomOpen = (e) => {
+    if (e.target.id == "footer-music" || e.target.tagName == "IMG")
+        musicStore.bottomOpen = true;
 }
 
 </script>
@@ -104,7 +107,7 @@ const handleBottomOpen = (e)=>{
         }
     }
 
-    .footer-music-right{
+    .footer-music-right {
         width: 3.6rem;
         padding-left: .4rem;
         display: flex;

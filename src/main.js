@@ -1,5 +1,5 @@
 import { createPinia } from "pinia";
-import { Popup, Progress, Slider, Tab, Tabs } from "vant";
+import { Popover, Popup, Progress, Slider, Tab, Tabs } from "vant";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
