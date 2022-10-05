@@ -8,7 +8,6 @@
     </div>
 </template>
 <script setup>
-import { emit } from 'process';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 
 const popShadow = ref(null)
@@ -17,7 +16,6 @@ const props = defineProps({
     modelValue:Boolean,
     position: Number,
 })
-const emits = defineEmits(["update:modelValue"])
 /**
  * position：
  *   8    1   2
@@ -85,22 +83,44 @@ onMounted(() => {
         transform: translateX(50%);
         margin-bottom: 150%;
     }
+
     .my-pop-show-position-2{
+        left: 0;
+        bottom: 0;
+        margin-bottom: 150%;
+    }
+    .my-pop-show-position-3{
         left: 0;
         bottom: 50%;
         transform: translateY(50%);
         margin-left: 150%;
     }
-    .my-pop-show-position-2{
+    .my-pop-show-position-4{
         left: 0;
         top: 0;
-        margin-left: 150%;
+        margin-top: 150%;
+    }
+    .my-pop-show-position-5{
+        top:0;
+        right: 50%;
+        transform: translateX(50%);
+        margin-top: 150%;
+    }
+    .my-pop-show-position-6{
+        right: 0;
+        top: 0;
+        margin-top: 150%;
+    }
+    .my-pop-show-position-7{
+        right: 0;
+        bottom: 50%;
+        transform: translateY(50%);
+        margin-right: 150%;
     }
     .my-pop-show-position-8{
         right: 0;
         bottom:0;
         margin-bottom: 150%;
-        // transform: translateY(-100%);
     }
 
 }
