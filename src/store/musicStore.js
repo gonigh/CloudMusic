@@ -117,7 +117,7 @@ export const useMusicStore = defineStore("music-store", {
       else return null;
     },
     curLyricIndex: (state) => {
-      if (state.curId != -1) {
+      if (state.curId != -1 && state.curPlay.lyric && state.curPlay.lyric.length > state.lyricIndex) {
         let res;
         if (state.curTime > state.curPlay.lyric[state.lyricIndex].key) {
           while (
@@ -135,6 +135,8 @@ export const useMusicStore = defineStore("music-store", {
           res = state.lyricIndex;
         }
         return res;
+      }else{
+        return state.lyricIndex;
       }
     },
   },
@@ -203,6 +205,7 @@ export const useMusicStore = defineStore("music-store", {
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime = 0;
+      
 
       //获取歌曲url
       let res = await getSongUrl(item.id);
@@ -271,7 +274,6 @@ export const useMusicStore = defineStore("music-store", {
           lyricList.push({ key: 999999, content: "" });
         }
         this.curPlay.lyric = lyricList;
-        this.curPlay.curLyric = 0;
       });
     },
 

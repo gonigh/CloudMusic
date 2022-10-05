@@ -104,9 +104,10 @@ watch(() => musicStore.curPlay.flag, (value) => {
 
 watch(() => musicStore.curLyricIndex, (newValue, oldValue) => {
     let curP = lyric.value.children[newValue];
-    curP.scrollTop = 10;
-    let offset = curP.offsetTop - lyric.value.offsetHeight / 2 + curP.offsetHeight / 2;
-    lyric.value.scrollTo({ top: offset, behavior: 'smooth' })
+    if (curP) {
+        let offset = curP.offsetTop - lyric.value.offsetHeight / 2 + curP.offsetHeight / 2;
+        lyric.value.scrollTo({ top: offset, behavior: 'smooth' })
+    }
 })
 
 
