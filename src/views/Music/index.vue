@@ -44,8 +44,8 @@
                 <MyIcon :icon="musicStore.curPlay.flag?'#icon-zanting':'#icon-bofang'" fill="white" width=".8rem"
                     @click="musicStore.playOrStop"></MyIcon>
                 <MyIcon icon="#icon-xiayishou" fill="white" width=".5rem" @click="musicStore.nextSong"></MyIcon>
-                <MyIcon icon="#icon-bofangliebiao" width=".5rem" fill="white"></MyIcon>
-
+                <!-- <MyIcon icon="#icon-bofangliebiao" width=".5rem" fill="white"></MyIcon> -->
+                <SongListPop fill="white" width=".5rem"></SongListPop>
             </div>
         </div>
     </div>
@@ -55,6 +55,7 @@ import { useMusicStore } from '../../store/musicStore';
 import MyIcon from '../../components/MyIcon.vue';
 import { onMounted, reactive, ref, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
+import SongListPop from '../../components/SongListPop.vue';
 
 const musicStore = useMusicStore();
 const lyric = ref(null)

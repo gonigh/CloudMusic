@@ -11,11 +11,11 @@
         </div>
         <div class="footer-music-middle">
             <div class="footer-music-info">
-                <div>
+                <div class="footer-music-info-left">
                     <text style="font-size: .36rem;">{{musicStore.curPlay.name}}</text>
                     <text style="color: #919191;font-size: .36rem;"> - {{musicStore.authors}}</text>
                 </div>
-                <div>
+                <div class="footer-music-info-right">
                     <text>{{musicStore.formatCurTime}}</text>
                     <text style="color: #919191;">/{{musicStore.formatDuration}}</text>
                 </div>
@@ -27,9 +27,7 @@
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex].icon" width=".4rem" fill="rgb(148,148,148)"
                 @click="musicStore.changePlayType"></MyIcon>
-
-            
-            <SongListPop></SongListPop>
+            <SongListPop width=".4rem" fill="rgb(148,148,148)"></SongListPop>
         </div>
 
     </div>
@@ -103,7 +101,17 @@ const handleBottomOpen = (e) => {
             justify-content: space-between;
             align-items: center;
             height: 90%;
-
+            .footer-music-info-left{
+                
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+                flex: 1;
+            }
+            .footer-music-info-right{
+                
+            }
             text {
                 font-size: .3rem;
             }

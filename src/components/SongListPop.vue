@@ -1,6 +1,7 @@
 <template>
     <div class="icon-song-list">
-        <MyIcon icon="#icon-bofangliebiao" width=".4rem" fill="rgb(148,148,148)" @click="musicStore.setSongListPopover">
+        <MyIcon icon="#icon-bofangliebiao" :width="props.width" :fill="props.fill"
+            @click="musicStore.setSongListPopover">
         </MyIcon>
         <div ref="popShadow" class="pop-shadow" @click="clickPopShadow"></div>
         <div v-show="musicStore.songListPopover" ref="songList" class="song-list">
@@ -28,7 +29,8 @@
                         <span
                             :style="{color:item.id==musicStore.curId?'red':'black',fontSize:'.3rem',margin: '0 .1rem'}">{{item.name}}</span>
                         <span
-                            :style="{color:item.id==musicStore.curId?'red':'rgba(0,0,0,.7)',fontSize:'.2rem'}">{{"-"+item.authors.map((i)=> i.name).join("/")}}</span>
+                            :style="{color:item.id==musicStore.curId?'red':'rgba(0,0,0,.7)',fontSize:'.2rem'}">{{"-"+item.authors.map((i)=>
+                            i.name).join("/")}}</span>
                     </div>
                     <div class="one-song-right">
                         <MyIcon icon="#icon-cuowu" width=".3rem" fill="rgb(148,148,148)"
@@ -36,9 +38,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </template>
 <script setup>
@@ -49,7 +49,11 @@ import MyIcon from './MyIcon.vue';
 const musicStore = useMusicStore();
 const songList = ref(null)
 const popShadow = ref(null)
-const state = reactive({})
+
+const props = defineProps({
+    width: String,
+    fill: String
+})
 
 /**
  * 点击遮罩层事件，关闭播放列表
@@ -92,7 +96,7 @@ const handleSelectSong = (id) => {
         return item.id == id
     })[0];
     console.log(nextSong)
-    musicStore.playSong(nextSong,2);
+    musicStore.playSong(nextSong, 2);
 }
 
 
