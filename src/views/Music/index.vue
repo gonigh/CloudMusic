@@ -38,7 +38,7 @@
                 <text>{{musicStore.formatDuration}}</text>
             </div>
             <div class="music-control-down">
-                <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".5rem" fill="white"
+                <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex].icon" width=".5rem" fill="white"
                     @click="musicStore.changePlayType"></MyIcon>
                 <MyIcon icon="#icon-shangyishou" fill="white" width=".5rem" @click="musicStore.preSong"></MyIcon>
                 <MyIcon :icon="musicStore.curPlay.flag?'#icon-zanting':'#icon-bofang'" fill="white" width=".8rem"

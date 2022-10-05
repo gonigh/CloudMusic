@@ -25,7 +25,7 @@
         <div class="footer-music-right">
             <MyIcon icon="#icon-aixin" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
-            <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex]" width=".4rem" fill="rgb(148,148,148)"
+            <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex].icon" width=".4rem" fill="rgb(148,148,148)"
                 @click="musicStore.changePlayType"></MyIcon>
 
             

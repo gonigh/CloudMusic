@@ -4,9 +4,37 @@
         </MyIcon>
         <div ref="popShadow" class="pop-shadow" @click="clickPopShadow"></div>
         <div v-show="musicStore.songListPopover" ref="songList" class="song-list">
-            <div class="one-song" v-for="item in musicStore.playList" :key="item.id">
-                {{item.name}}
+            <div class="song-list-top">
+                <div class="song-list-top-left" @click="musicStore.changePlayType">
+                    <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex].icon" width=".4rem"
+                        fill="rgb(148,148,148)"></MyIcon>
+                    <span style="margin-left: .2rem;">{{musicStore.playType[musicStore.playTypeIndex].name}}</span>
+                </div>
+                <div class="song-list-top-middle">
+                    <MyIcon icon="#icon-shoucang" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+                    <span style="margin-left: .2rem;">收藏</span>
+                </div>
+                <div class="song-list-top-right">
+                    <MyIcon icon="#icon-shanchu" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+                </div>
             </div>
+            <div class="songs">
+                <div class="one-song" v-for="(item,i) in musicStore.playList" :key="item.id"
+                    @click="handleSelectSong(item.id)">
+                    <div v-show="i==musicStore.curIndex">
+                        <MyIcon icon="#icon-sound" width=".4rem" fill="red"></MyIcon>
+                    </div>
+                    <div class="one-song-left">
+                        <span
+                            :style="{color:i==musicStore.curIndex?'red':'black',fontSize:'.3rem',margin: '0 .1rem'}">{{item.name}}</span>
+                        <span :style="{color:i==musicStore.curIndex?'red':'rgba(0,0,0,.7)',fontSize:'.2rem'}">{{"-"+item.authors.map((i) => i.name).join("/")}}</span>
+                    </div>
+                    <div class="one-song-right">
+                        <MyIcon icon="#icon-cuowu" width=".3rem" fill="rgb(148,148,148)"></MyIcon>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -21,12 +49,17 @@ const songList = ref(null)
 const popShadow = ref(null)
 const state = reactive({})
 
+/**
+ * 点击遮罩层事件，关闭播放列表
+ * @param {*} e 
+ */
 const clickPopShadow = (e) => {
-    // if(e.target.classList.indexOf("pop-shadow")!=-1){}
-    console.log(e.target)
     musicStore.songListPopover = false;
 }
 
+/**
+ * 监听播放列表是否打开
+ */
 watch(() => musicStore.songListPopover, (value) => {
     if (value) {
         popShadow.value.style.display = "block";
@@ -35,35 +68,108 @@ watch(() => musicStore.songListPopover, (value) => {
     }
 })
 
+/**
+ * 挂载后为遮罩层设置大小
+ */
 onMounted(() => {
     popShadow.value.style.width = document.documentElement.clientWidth + "px";
     popShadow.value.style.height = document.documentElement.clientHeight + "px";
-    if(musicStore.songListPopover){
+    if (musicStore.songListPopover) {
         popShadow.value.style.display = "block";
     } else {
         popShadow.value.style.display = "none";
     }
 })
 
+const handleSelectSong = (id) => {
+    let nextSong = musicStore.playList.filter((item) => {
+        return item.id == id
+    })[0];
+    console.log(nextSong)
+    musicStore.playSong(nextSong);
+}
 
 </script>
 <style lang="less" scoped>
 .icon-song-list {
     position: relative;
 
+
     .song-list {
         z-index: 3001;
-        color: aqua;
         width: 8rem;
         background-color: white;
         height: 10rem;
-        overflow: scroll;
         position: absolute;
         bottom: .8rem;
         right: -.2rem;
         border-radius: .2rem;
+        padding-top: 1rem;
+        overflow: hidden;
 
-        .one-song {}
+        .song-list-top {
+            font-size: .36rem;
+            margin-top: -1rem;
+            height: .8rem;
+            width: 100%;
+            display: flex;
+            padding: .1rem .2rem;
+
+            .song-list-top-left {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                line-height: 100%;
+                flex: 1;
+            }
+
+            .song-list-top-middle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                line-height: 100%;
+                width: 2rem;
+            }
+
+            .song-list-top-right {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                line-height: 100%;
+                width: 1rem;
+                border-left: 1px solid rgba(0, 0, 0, .1);
+            }
+        }
+
+        .songs {
+            overflow: scroll;
+            height: 100%;
+
+            .one-song {
+                height: .8rem;
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid rgba(0, 0, 0, .1);
+                padding: .1rem .2rem;
+
+                .one-song-left {
+                    flex: 1;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                }
+
+                .one-song-right {
+                    width: 1rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
     }
 }
 

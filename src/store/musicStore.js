@@ -77,7 +77,11 @@ export const useMusicStore = defineStore("music-store", {
       /**
        * 播放方式列表及当前播放方式
        */
-      playType: ["#icon-shunxubofang", "#icon-suijibof", "#icon-danquxunhuan"],
+      playType: [
+        { name: "顺序播放", icon: "#icon-shunxubofang" },
+        { name: "随机播放", icon: "#icon-suijibof" },
+        { name: "单曲循环", icon: "#icon-danquxunhuan" },
+      ],
       playTypeIndex: 0,
 
       /**
@@ -245,8 +249,8 @@ export const useMusicStore = defineStore("music-store", {
         });
         // 最后空出几行
         let afterSpace = 5;
-        for(let i=0;i<afterSpace;i++){
-          lyricList.push({key: 999999,content:''});
+        for (let i = 0; i < afterSpace; i++) {
+          lyricList.push({ key: 999999, content: "" });
         }
         this.curPlay.lyric = lyricList;
         this.curPlay.curLyric = 0;
@@ -331,8 +335,8 @@ export const useMusicStore = defineStore("music-store", {
       }
     },
 
-    setSongListPopover(){
-      this.songListPopover=!this.songListPopover;
-    }
+    setSongListPopover() {
+      this.songListPopover = !this.songListPopover;
+    },
   },
 });
