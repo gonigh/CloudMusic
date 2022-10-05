@@ -36,7 +36,7 @@ export const useMusicStore = defineStore("music-store", {
       /**
        * 当前播放歌曲在播放列表中的index
        */
-      curIndex: -1,
+      curId: -1,
 
       /**
        * 当前播放歌曲
@@ -112,12 +112,12 @@ export const useMusicStore = defineStore("music-store", {
       return changeTime(state.curPlay.duration);
     },
     authors: (state) => {
-      if (state.curIndex != -1)
+      if (state.curId != -1)
         return state.curPlay.authors.map((i) => i.name).join("/");
       else return null;
     },
     curLyricIndex: (state) => {
-      if (state.curIndex != -1) {
+      if (state.curId != -1) {
         let res;
         if (state.curTime > state.curPlay.lyric[state.lyricIndex].key) {
           while (
@@ -195,9 +195,11 @@ export const useMusicStore = defineStore("music-store", {
     },
 
     /**
-     * 播放歌曲
+     *
+     * @param {*} item
+     * @param {*} type 从哪点进来的，歌单播放为1，播放列表播放为2，搜索单曲播放为3
      */
-    async playSong(item) {
+    async playSong(item, type = 1) {
       this.curPlay = item;
       this.curPlay.flag = true;
       this.curTime = 0;
@@ -205,9 +207,25 @@ export const useMusicStore = defineStore("music-store", {
       //获取歌曲url
       let res = await getSongUrl(item.id);
       this.curPlay.url = res.data.data[0].url;
-      if (this.curSongList.id != -1) {
+      if (this.curSongList.id != -1 && type == 1) {
+        // 点击歌单歌曲播放，播放列表更新为当前歌单
         this.playList = this.curSongList.songList;
-        this.curIndex = this.playList.indexOf(item);
+        this.curId = item.id;
+      } else if (type == 2) {
+        // 点击播放列表播放，不变化
+        this.curId = item.id;
+      } else if (type == 3) {
+        // 点击某单曲播放，当前单曲插入到播放列表当前位置
+        let nextIndex;
+        if (this.playList.length) {
+          let curIndex = this.playList.findIndex(
+            (item) => item.id == this.curId
+          );
+          nextIndex = (curIndex + 1) % this.playList.length;
+        } else {
+          nextIndex = 0;
+        }
+        this.playList.splice(nextIndex, 0, item);
       }
       this.getLyric(item.id);
 
@@ -315,7 +333,8 @@ export const useMusicStore = defineStore("music-store", {
      */
     nextSong() {
       if (this.playTypeIndex == 0) {
-        let nextIndex = (this.curIndex + 1) % this.playList.length;
+        let curIndex = this.playList.findIndex((item) => item.id == this.curId);
+        let nextIndex = (curIndex + 1) % this.playList.length;
         this.playSong(this.playList[nextIndex]);
       } else if (this.playTypeIndex == 1) {
         let nextIndex = parseInt(Math.random() * this.playList.length);
@@ -329,14 +348,44 @@ export const useMusicStore = defineStore("music-store", {
      */
     preSong() {
       if (this.playTypeIndex == 0 || this.playTypeIndex == 1) {
+        let curIndex = this.playList.findIndex((item) => item.id == this.curId);
         let preIndex =
-          (this.playList.length + this.curIndex - 1) % this.playList.length;
+          (curIndex - 1 + this.playList.length) % this.playList.length;
         this.playSong(this.playList[preIndex]);
       }
     },
 
+    /**
+     * 播放列表是否展示
+     */
     setSongListPopover() {
       this.songListPopover = !this.songListPopover;
+    },
+
+    /**
+     * 移除播放列表中某一首歌
+     * @param {*} id
+     */
+    removeSong(id) {
+      if (id != this.curPlay.id) {
+        this.playList = this.playList.filter((item) => item.id != id);
+      } else {
+        this.nextSong();
+        this.playList = this.playList.filter((item) => item.id != id);
+      }
+    },
+
+    /**
+     * 清空播放列表
+     */
+    clearPlayList() {
+      this.playList = [];
+      this.curId = -1;
+      this.songListPopover=false;
+      if (this.curPlay.flag) {
+        this.audio.pause();
+        clearInterval(this.timer);
+      }
     },
   },
 });

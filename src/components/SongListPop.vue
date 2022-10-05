@@ -15,22 +15,24 @@
                     <span style="margin-left: .2rem;">收藏</span>
                 </div>
                 <div class="song-list-top-right">
-                    <MyIcon icon="#icon-shanchu" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
+                    <MyIcon icon="#icon-shanchu" width=".4rem" fill="rgb(148,148,148)"
+                        @click="musicStore.clearPlayList"></MyIcon>
                 </div>
             </div>
             <div class="songs">
-                <div class="one-song" v-for="(item,i) in musicStore.playList" :key="item.id"
-                    @click="handleSelectSong(item.id)">
-                    <div v-show="i==musicStore.curIndex">
+                <div class="one-song" v-for="(item) in musicStore.playList" :key="item.id">
+                    <div v-show="item.id==musicStore.curId">
                         <MyIcon icon="#icon-sound" width=".4rem" fill="red"></MyIcon>
                     </div>
-                    <div class="one-song-left">
+                    <div class="one-song-left" @click="handleSelectSong(item.id)">
                         <span
-                            :style="{color:i==musicStore.curIndex?'red':'black',fontSize:'.3rem',margin: '0 .1rem'}">{{item.name}}</span>
-                        <span :style="{color:i==musicStore.curIndex?'red':'rgba(0,0,0,.7)',fontSize:'.2rem'}">{{"-"+item.authors.map((i) => i.name).join("/")}}</span>
+                            :style="{color:item.id==musicStore.curId?'red':'black',fontSize:'.3rem',margin: '0 .1rem'}">{{item.name}}</span>
+                        <span
+                            :style="{color:item.id==musicStore.curId?'red':'rgba(0,0,0,.7)',fontSize:'.2rem'}">{{"-"+item.authors.map((i)=> i.name).join("/")}}</span>
                     </div>
                     <div class="one-song-right">
-                        <MyIcon icon="#icon-cuowu" width=".3rem" fill="rgb(148,148,148)"></MyIcon>
+                        <MyIcon icon="#icon-cuowu" width=".3rem" fill="rgb(148,148,148)"
+                            @click="musicStore.removeSong(item.id)"></MyIcon>
                     </div>
                 </div>
             </div>
@@ -81,13 +83,18 @@ onMounted(() => {
     }
 })
 
+/**
+ * 选择播放歌曲
+ * @param {*} id 
+ */
 const handleSelectSong = (id) => {
     let nextSong = musicStore.playList.filter((item) => {
         return item.id == id
     })[0];
     console.log(nextSong)
-    musicStore.playSong(nextSong);
+    musicStore.playSong(nextSong,2);
 }
+
 
 </script>
 <style lang="less" scoped>
