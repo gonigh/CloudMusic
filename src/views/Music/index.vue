@@ -54,7 +54,7 @@
                     @click="musicStore.playOrStop"></MyIcon>
                 <MyIcon icon="#icon-xiayishou" fill="white" width=".5rem" @click="musicStore.nextSong"></MyIcon>
                 <!-- <MyIcon icon="#icon-bofangliebiao" width=".5rem" fill="white"></MyIcon> -->
-                <MyPopover v-model="musicStore.songListPopover" :position="pageStore.clientWidth>1000?1:8">
+                <MyPopover v-model="musicStore.songListPopover" :position="playListPosition">
                     <template #reference>
                         <MyIcon icon="#icon-bofangliebiao" fill="white" width=".5rem"
                             @click="musicStore.setSongListPopover">
@@ -71,7 +71,7 @@
 <script setup>
 import { useMusicStore } from '../../store/musicStore';
 import MyIcon from '../../components/MyIcon.vue';
-import { onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import MyProgress from '../../components/MyProgress.vue';
 import MyPopover from '../../components/MyPopover.vue';
 import PlayList from '../../components/PlayList.vue';
@@ -145,10 +145,9 @@ watch(() => musicStore.curLyricIndex, (newValue, oldValue) => {
     }
 })
 
-let playListPosition = ref(8)
-window.onresize = function () {
-    
-}
+let playListPosition = computed(()=>{
+    return pageStore.clientWidth>1000?1:8
+})
 
 </script>
 <style lang="less">

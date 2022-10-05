@@ -122,8 +122,6 @@ const handleBottomOpen = (e) => {
                 flex: 1;
             }
 
-            .footer-music-info-right {}
-
             text {
                 font-size: .3rem;
             }

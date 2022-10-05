@@ -16,6 +16,7 @@ const props = defineProps({
     modelValue:Boolean,
     position: Number,
 })
+const emits = defineEmits(["update:modelValue"])
 /**
  * position：
  *   8    1   2
@@ -45,7 +46,7 @@ const clickPopShadow = (e) => {
 }
 
 /**
- * 监听播放列表是否打开
+ * 监听气泡是否打开
  */
 watch(() => showPopover.value, (value) => {
     if (value) {
@@ -121,6 +122,7 @@ onMounted(() => {
         right: 0;
         bottom:0;
         margin-bottom: 150%;
+        // transform: translateY(-100%);
     }
 
 }
@@ -128,7 +130,7 @@ onMounted(() => {
 .pop-shadow {
     position: fixed;
     z-index: 3000;
-    bottom: 0;
-    right: 0;
+    left: 0;
+    top: 0;
 }
 </style>
