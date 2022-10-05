@@ -102,6 +102,8 @@ export const useMusicStore = defineStore("music-store", {
        * 时间锁，为true时定时器不可改变curTime
        */
       lock: false,
+
+      volume: Number,
     };
   },
   getters: {
@@ -231,7 +233,7 @@ export const useMusicStore = defineStore("music-store", {
         this.playList.splice(nextIndex, 0, item);
       }
       this.getLyric(item.id);
-
+      this.volume = this.audio.volume;
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
         if (!this.lock) {
@@ -389,5 +391,14 @@ export const useMusicStore = defineStore("music-store", {
         clearInterval(this.timer);
       }
     },
+
+    /**
+     * 改变音量
+     * @param {*} value 
+     */
+    updateVolume(value){
+      this.volume = value
+      this.audio.volume = value;
+    }
   },
 });

@@ -29,14 +29,16 @@
                 <MyIcon icon="#icon-aixin" width=".5rem" fill="white"></MyIcon>
                 <MyIcon icon="#icon-download" width=".5rem" fill="white"></MyIcon>
                 <MyIcon icon="#icon-xiaoxi" width=".5rem" fill="white"></MyIcon>
-                <VanPopover v-model:show="state.showSound">
+                <MyPopover v-model="state.showSound" :position=1>
                     <template #reference>
-                        <MyIcon icon="#icon-sound" width=".5rem" fill="white"></MyIcon>
+                        <MyIcon icon="#icon-sound" width=".5rem" fill="white" @click="handleShowSound"></MyIcon>
                     </template>
                     <template #default>
-                        <VanSlider></VanSlider>
+                        <div class="sound-container">
+                            <VanSlider  :max=1 step="0.01" active-color="red" v-model="musicStore.volume" reverse vertical @update:model-value="handleUpdateSound"></VanSlider>
+                        </div>
                     </template>
-                </VanPopover>
+                </MyPopover>
 
 
                 <MyIcon icon="#icon-gengduo-shuxiang" width=".5rem" fill="white"></MyIcon>
@@ -76,6 +78,8 @@ import MyProgress from '../../components/MyProgress.vue';
 import MyPopover from '../../components/MyPopover.vue';
 import PlayList from '../../components/PlayList.vue';
 import { usePageStore } from '../../store/pageStore';
+import throttle from '../../utils/throttle';
+import { storeToRefs } from 'pinia';
 
 const musicStore = useMusicStore();
 const pageStore = usePageStore();
@@ -145,12 +149,36 @@ watch(() => musicStore.curLyricIndex, (newValue, oldValue) => {
     }
 })
 
+/**
+ * 歌单显示位置
+ */
 let playListPosition = computed(()=>{
     return pageStore.clientWidth>1000?1:8
 })
+
+/**
+ * 显示声音滑块
+ */
+const handleShowSound = ()=>{
+    state.showSound = !state.showSound;
+}
+
+const handleUpdateSound = throttle(musicStore.updateVolume,100)
 
 </script>
 <style lang="less">
 @import './vertical.less';
 @import './horizontal.less';
+
+.sound-container{
+    height: 3rem;
+    width: .8rem;
+    border-radius: .2rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: .2rem;
+    padding: .2rem;
+}
 </style>
