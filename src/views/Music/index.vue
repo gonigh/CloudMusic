@@ -58,15 +58,27 @@ import MyProgress from '../../components/MyProgress.vue';
 
 const musicStore = useMusicStore();
 const lyric = ref(null)
+
+/**
+ * 监听是否播放，控制cd转动
+ */
+let requestId;
+let curAngle = 0;
+const cd = ref(null);
+const albumPic = ref(null);
+
+const CDRotate = function () {
+    curAngle = curAngle + 0.2;
+    cd.value.style.transform = `rotate(${curAngle}deg)`
+    albumPic.value.style.transform = `rotate(${curAngle}deg)`
+    requestId = window.requestAnimationFrame(CDRotate);
+}
 onMounted(() => {
     let dom = document.getElementById("music-container")
     dom.style.backgroundImage = `url(${musicStore.curPlay.album.picUrl})`
     dom.style.backgroundSize = "cover";
     if (musicStore.curPlay.flag) {
-        timer = setInterval(() => {
-            cd.value.style.transform = `rotate(${++curAngle}deg)`
-            albumPic.value.style.transform = `rotate(${++curAngle}deg)`
-        }, 250)
+        requestId = window.requestAnimationFrame(CDRotate);
     }
 })
 /**
@@ -78,29 +90,22 @@ watch(() => musicStore.curPlay, () => {
     dom.style.backgroundSize = "cover";
 })
 
-/**
- * 监听是否播放，控制cd转动
- */
-let timer;
-let curAngle = 0;
-const cd = ref(null);
-const albumPic = ref(null);
+
+
 watch(() => musicStore.curPlay.flag, (value) => {
     if (value) {
-        timer = setInterval(() => {
-            cd.value.style.transform = `rotate(${++curAngle}deg)`
-            albumPic.value.style.transform = `rotate(${++curAngle}deg)`
-        }, 250)
+        requestId = window.requestAnimationFrame(CDRotate);
     } else {
-        clearInterval(timer);
+        window.cancelAnimationFrame(requestId);
+        console.log(requestId)
     }
 })
 
 watch(() => musicStore.curLyricIndex, (newValue, oldValue) => {
     let curP = lyric.value.children[newValue];
     curP.scrollTop = 10;
-    let offset = curP.offsetTop - lyric.value.offsetHeight/2 + curP.offsetHeight/2;
-    lyric.value.scrollTo({top:offset,behavior:'smooth'})
+    let offset = curP.offsetTop - lyric.value.offsetHeight / 2 + curP.offsetHeight / 2;
+    lyric.value.scrollTo({ top: offset, behavior: 'smooth' })
 })
 
 
