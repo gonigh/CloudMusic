@@ -33,9 +33,9 @@ const state = reactive({
 const musicStore = useMusicStore();
 const pageStore = usePageStore();
 
-const cardWidth = ref((document.documentElement.clientWidth - 160) / 5 + "px")
+const cardWidth = ref((pageStore.clientWidth - 160) / 5 + "px")
 const changeSongList = function () {
-    let c_width = document.documentElement.clientWidth;
+    let c_width = pageStore.clientWidth
     if (c_width > 1000) {
         cardWidth.value = (c_width - 160) / 5 + "px";
         state.showSongList = state.songList
@@ -44,9 +44,10 @@ const changeSongList = function () {
         state.showSongList = state.songList.slice(0, 8);
     }
 }
-window.onresize = function () {
+
+watch(() => pageStore.clientWidth, (value) => {
     changeSongList();
-}
+})
 onMounted(() => {
     getRecommendSongList(10).then(res => {
         state.songList = res.data.result

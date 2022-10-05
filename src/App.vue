@@ -20,14 +20,22 @@ import { useMusicStore } from './store/musicStore';
 import FooterMusic from './components/FooterMusic.vue';
 import { onMounted, ref } from 'vue';
 import Music from './views/Music/index.vue';
+import { usePageStore } from './store/pageStore';
 
 const musicStore = useMusicStore();
+const pageStore = usePageStore();
 
 const audio = ref(null);
 onMounted(() => {
   musicStore.setAudio(audio);
 })
 
+// 存储当前窗口大小
+pageStore.updateSize(document.documentElement.clientWidth,document.documentElement.clientHeight);
+
+window.onresize=function(){
+  pageStore.updateSize(document.documentElement.clientWidth,document.documentElement.clientHeight);
+}
 
 </script>
 <style lang="less">

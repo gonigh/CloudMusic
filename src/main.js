@@ -11,5 +11,6 @@ app.use(createPinia());
 app.use(Tabs);
 app.use(Tab);
 app.use(Popup);
+app.use(Popover);
 app.use(Slider);
 app.mount("#app");

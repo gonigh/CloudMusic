@@ -27,7 +27,17 @@
             <MyIcon icon="#icon-download" width=".4rem" fill="rgb(148,148,148)"></MyIcon>
             <MyIcon :icon="musicStore.playType[musicStore.playTypeIndex].icon" width=".4rem" fill="rgb(148,148,148)"
                 @click="musicStore.changePlayType"></MyIcon>
-            <SongListPop width=".4rem" fill="rgb(148,148,148)"></SongListPop>
+            <!-- <SongListPop width=".4rem" fill="rgb(148,148,148)"></SongListPop> -->
+            <MyPopover v-model="musicStore.songListPopover" :position=8>
+                <template #reference>
+                    <MyIcon icon="#icon-bofangliebiao" width=".4rem" fill="rgb(148,148,148)"
+                        @click="musicStore.setSongListPopover">
+                    </MyIcon>
+                </template>
+                <template #default>
+                    <PlayList></PlayList>
+                </template>
+            </MyPopover>
         </div>
 
     </div>
@@ -37,7 +47,8 @@ import { watch } from 'vue';
 import { useMusicStore } from '../store/musicStore';
 import MyIcon from './MyIcon.vue';
 import MyProgress from './MyProgress.vue';
-import SongListPop from './SongListPop.vue';
+import MyPopover from './MyPopover.vue';
+import PlayList from './PlayList.vue';
 
 const musicStore = useMusicStore();
 
@@ -45,10 +56,10 @@ const musicStore = useMusicStore();
  * 初试状态隐藏，播放歌曲后弹出
  */
 watch(() => musicStore.curId, (value) => {
-    if (musicStore.curId!=-1) {
+    if (musicStore.curId != -1) {
         let dom = document.getElementsByClassName("footer-music")[0];
         dom.style.transform = "translateY(0)";
-    }else{
+    } else {
         let dom = document.getElementsByClassName("footer-music")[0];
         dom.style.transform = "translateY(1.8rem)";
     }
@@ -101,17 +112,18 @@ const handleBottomOpen = (e) => {
             justify-content: space-between;
             align-items: center;
             height: 90%;
-            .footer-music-info-left{
-                
+
+            .footer-music-info-left {
+
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 1;
                 overflow: hidden;
                 flex: 1;
             }
-            .footer-music-info-right{
-                
-            }
+
+            .footer-music-info-right {}
+
             text {
                 font-size: .3rem;
             }

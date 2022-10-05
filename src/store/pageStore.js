@@ -40,18 +40,25 @@ export const usePageStore = defineStore("page-store", {
           activate: false,
         },
       ],
-      
+
+      clientWidth: Number,
+      clientHeight: Number,
     };
   },
-  actions:{
+  actions: {
     /**
      * 页面跳转
      * @param {*} item
      */
-     changePage(item) {
-        this.pages[this.curPage].activate = false;
-        this.pages[item.key].activate = true;
-        this.curPage = item.key;
-      },
-  }
+    changePage(item) {
+      this.pages[this.curPage].activate = false;
+      this.pages[item.key].activate = true;
+      this.curPage = item.key;
+    },
+
+    updateSize(width,height){
+      this.clientHeight=height;
+      this.clientWidth=width;
+    }
+  },
 });
