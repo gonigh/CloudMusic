@@ -1,5 +1,5 @@
 <template>
-    <div id="footer-music" v-show="musicStore.curId!=-1" class="footer-music" @click="handleBottomOpen">
+    <div id="footer-music" class="footer-music" @click="handleBottomOpen">
         <div class="footer-music-pic">
             <img :src="musicStore.curPlay.album.picUrl">
         </div>
@@ -47,9 +47,12 @@ const musicStore = useMusicStore();
  * 初试状态隐藏，播放歌曲后弹出
  */
 watch(() => musicStore.curId, (value) => {
-    if (musicStore.curPlay.flag) {
+    if (musicStore.curId!=-1) {
         let dom = document.getElementsByClassName("footer-music")[0];
-        dom.style.transform = "unset";
+        dom.style.transform = "translateY(0)";
+    }else{
+        let dom = document.getElementsByClassName("footer-music")[0];
+        dom.style.transform = "translateY(1.8rem)";
     }
 })
 
@@ -70,7 +73,8 @@ const handleBottomOpen = (e) => {
     z-index: 3000;
     border-top: .5px solid rgba(118, 118, 118, 0.5);
 
-    transition-duration: .6s;
+    transform: translateY(1.8rem);
+    transition-duration: .4s;
     display: flex;
     align-items: center;
     padding: .4rem;
