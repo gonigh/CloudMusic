@@ -4,10 +4,11 @@
             <text>{{props.title}}</text>
         </div>
         <div class="card-right">
-            <text>更多</text>
+            <slot name="top-right"></slot>
+            <!-- <text>更多</text>
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-youjiantou"></use>
-            </svg>
+            </svg> -->
         </div>
     </div>
     <div class="card-content">
@@ -43,18 +44,9 @@ const props = defineProps({
     }
 
     .card-right {
+        display: flex;
         align-items: center;
         height: .8rem;
-        color: rgb(129, 129, 129);
-
-        text {
-            line-height: .8rem;
-        }
-
-        svg {
-            height: 1em;
-            width: 1em;
-        }
     }
 }
 

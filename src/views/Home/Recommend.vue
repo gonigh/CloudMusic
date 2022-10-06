@@ -3,6 +3,10 @@
         <Banner></Banner>
     </div>
     <MyCard title="推荐">
+        <template #top-right @click="a">
+            <text>更多</text>
+            <MyIcon icon="#icon-youjiantou" width=".25rem"></MyIcon>
+        </template>
         <SongListCard v-for="item in state.showSongList" v-bind:key="item.id" :id="'song-list-'+item.id"
             :play-count="item.playCount" :name="item.name" :card-width="cardWidth" :pic="item.picUrl">
         </SongListCard>
@@ -24,6 +28,7 @@ import MyPopup from "../../components/MyPopup.vue";
 import SongListDetail from "../../components/Home/SongListDetail.vue";
 import { useMusicStore } from "../../store/musicStore";
 import { usePageStore } from "../../store/pageStore";
+import MyIcon from "../../components/MyIcon.vue";
 
 const state = reactive({
     songList: [],
