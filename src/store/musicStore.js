@@ -233,9 +233,10 @@ export const useMusicStore = defineStore("music-store", {
         this.playList.splice(nextIndex, 0, item);
       }
       this.getLyric(item.id);
-      this.volume = this.audio.volume;
+      
       // 设置定时器获取当前播放时间
       this.timer = setInterval(() => {
+        this.volume = this.audio.volume;
         if (!this.lock) {
           this.curTime = this.audio.currentTime * 1000;
           // 播放结束自动播放下一首
@@ -289,6 +290,7 @@ export const useMusicStore = defineStore("music-store", {
       } else {
         this.audio.play();
         this.timer = setInterval(() => {
+          this.volume = this.audio.volume;
           if (!this.lock) {
             this.curTime = this.audio.currentTime * 1000;
             // 播放结束自动播放下一首
