@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <van-tabs :active="active">
+    <van-tabs :active="pageStore.homeActive">
       <template #nav-right>
         <div class="search">
           <svg class="icon" aria-hidden="true">
@@ -25,8 +25,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import { usePageStore } from '../../store/pageStore';
 import Recommend from './Recommend.vue';
-const active = ref(0);
+
+const pageStore = usePageStore();
 
 </script>
 

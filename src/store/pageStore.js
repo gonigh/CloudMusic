@@ -43,6 +43,8 @@ export const usePageStore = defineStore("page-store", {
 
       clientWidth: Number,
       clientHeight: Number,
+
+      homeActive: 0,
     };
   },
   actions: {
@@ -56,9 +58,22 @@ export const usePageStore = defineStore("page-store", {
       this.curPage = item.key;
     },
 
+    /**
+     * 更新窗口大小
+     * @param {*} width 
+     * @param {*} height 
+     */
     updateSize(width,height){
       this.clientHeight=height;
       this.clientWidth=width;
+    },
+
+    /**
+     * 主页面标签页跳转
+     * @param {*} value 
+     */
+    updateHomeActive(value){
+      this.homeActive = value;
     }
   },
 });
