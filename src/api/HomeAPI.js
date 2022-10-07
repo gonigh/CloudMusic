@@ -85,10 +85,42 @@ export function getSongUrl(id){
   })
 }
 
+/**
+ * 获取歌词
+ * @param {*} id 
+ * @returns 
+ */
 export function getSongLyric(id){
   return request.get("/lyric",{
     params:{
       id
+    }
+  })
+}
+
+/**
+ * 获取歌单分类
+ * @returns 
+ */
+export function getCatlist(){
+  return request.get("/playlist/catlist");
+}
+
+export function getHotCatlist(){
+  return request.get("/playlist/hot");
+}
+
+/**
+ * 获取歌单列表
+ * @param {*} cat 
+ * @param {*} limit 
+ * @param {*} offset 
+ * @returns 
+ */
+export function getTopPlaylist(cat="全部",limit=40,offset=1){
+  return request.get("/top/playlist",{
+    params:{
+      cat,limit,offset
     }
   })
 }

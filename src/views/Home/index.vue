@@ -15,7 +15,9 @@
       <van-tab title="推荐">
         <recommend></recommend>
       </van-tab>
-      <van-tab title="歌单">歌单</van-tab>
+      <van-tab title="歌单">
+        <song-list></song-list>
+      </van-tab>
       <van-tab title="电台">电台</van-tab>
       <van-tab title="排行榜">排行榜</van-tab>
     </van-tabs>
@@ -27,6 +29,7 @@
 import { ref } from 'vue';
 import { usePageStore } from '../../store/pageStore';
 import Recommend from './Recommend.vue';
+import SongList from './SongList.vue';
 
 const pageStore = usePageStore();
 
