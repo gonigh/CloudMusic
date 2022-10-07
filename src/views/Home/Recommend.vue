@@ -3,9 +3,12 @@
         <Banner></Banner>
     </div>
     <MyCard title="推荐">
-        <template #top-right @click="a">
-            <text>更多</text>
-            <MyIcon icon="#icon-youjiantou" width=".25rem"></MyIcon>
+        <template #top-right>
+            <div @click="pageStore.updateHomeActive('playlist')">
+                <text>更多</text>
+                <MyIcon icon="#icon-youjiantou" width=".25rem"></MyIcon>
+            </div>
+
         </template>
         <SongListCard v-for="item in state.showSongList" v-bind:key="item.id" :id="'song-list-'+item.id"
             :play-count="item.playCount" :name="item.name" :card-width="state.cardWidth" :pic="item.picUrl">
@@ -36,7 +39,7 @@ const pageStore = usePageStore();
 const state = reactive({
     songList: [],
     showSongList: [],
-    cardWidth:(pageStore.clientWidth - 160) / 5 + "px",
+    cardWidth: (pageStore.clientWidth - 160) / 5 + "px",
 })
 
 const changeSongList = function () {

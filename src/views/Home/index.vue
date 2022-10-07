@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <van-tabs :active="pageStore.homeActive">
+    <van-tabs :active="pageStore.homeActive" @change="pageStore.updateHomeActive">
       <template #nav-right>
         <div class="search">
           <svg class="icon" aria-hidden="true">
@@ -12,14 +12,14 @@
       <template #nav-bottom>
         <div style="height: 1px;border-bottom: rgba(118, 118, 118,0.5) solid .5px;"></div>
       </template>
-      <van-tab title="推荐">
+      <van-tab title="推荐" name="recommend">
         <recommend></recommend>
       </van-tab>
-      <van-tab title="歌单">
+      <van-tab title="歌单" name="playlist">
         <song-list></song-list>
       </van-tab>
-      <van-tab title="电台">电台</van-tab>
-      <van-tab title="排行榜">排行榜</van-tab>
+      <van-tab title="电台" name="radio">电台</van-tab>
+      <van-tab title="排行榜" name="top">排行榜</van-tab>
     </van-tabs>
   </div>
 
@@ -32,7 +32,6 @@ import Recommend from './Recommend.vue';
 import SongList from './SongList.vue';
 
 const pageStore = usePageStore();
-
 </script>
 
 <style lang="less" scoped>

@@ -44,7 +44,7 @@ export const usePageStore = defineStore("page-store", {
       clientWidth: Number,
       clientHeight: Number,
 
-      homeActive: 0,
+      homeActive: "recommend",
     };
   },
   actions: {
@@ -73,6 +73,7 @@ export const usePageStore = defineStore("page-store", {
      * @param {*} value 
      */
     updateHomeActive(value){
+      console.log(value)
       this.homeActive = value;
     }
   },
