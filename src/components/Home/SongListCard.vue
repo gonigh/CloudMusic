@@ -23,7 +23,6 @@ const props = defineProps({
     pic: String,
     playCount: Number,
     id: String,
-    cardWidth: String,
 })
 const state = reactive({
     playCount: changeCount(props.playCount),
@@ -34,14 +33,14 @@ const state = reactive({
  * 设置歌单宽度
  */
 onMounted(() => {
-
     let dom = document.getElementById(props.id);
+    let width = dom.parentElement.offsetWidth > 1000 ? dom.parentElement.offsetWidth / 5 : dom.parentElement.offsetWidth / 4;
     let img = dom.children[0];
     let name = dom.children[2];
-    dom.style.height = `${parseInt(props.cardWidth.slice(0, -2)) * 1.3}px`;
-    img.style.width = props.cardWidth;
-    name.style.width = props.cardWidth;
-    if (img.getBoundingClientRect().top < pageStore.clientHeight*1.5) {
+    dom.style.height = `${width * 1.25}px`;
+    img.style.width = `${width-10}px`;
+    name.style.width = `${width-10}px`;
+    if (img.getBoundingClientRect().top < pageStore.clientHeight * 1.5) {
         img.src = props.pic;
     } else {
         pageStore.addLazyImg({ dom: img, url: props.pic });
@@ -50,13 +49,14 @@ onMounted(() => {
 /**
  * 监听宽度变化，窗口宽度改变后歌单宽度随之改变
  */
-watch(() => props.cardWidth, (newValue, oldValue) => {
+watch(() => pageStore.clientWidth, (newValue, oldValue) => {
     let dom = document.getElementById(props.id);
+    let width = dom.parentElement.offsetWidth > 1000 ? dom.parentElement.offsetWidth / 5 : dom.parentElement.offsetWidth / 4;
     let img = dom.children[0];
     let name = dom.children[2];
-    dom.style.height = `${parseInt(props.cardWidth.slice(0, -2)) * 1.3}px`;
-    img.style.width = props.cardWidth;
-    name.style.width = props.cardWidth;
+    dom.style.height = `${width * 1.25}px`;
+    img.style.width = `${width-10}px`;
+    name.style.width = `${width-10}px`;
 })
 
 const handleOpenSongList = function () {
@@ -65,8 +65,7 @@ const handleOpenSongList = function () {
 </script>
 <style lang="less" scoped>
 .song-list {
-    height: 5.4rem;
-    padding: .1rem;
+    padding: 5px;
     position: relative;
     overflow: hidden;
 

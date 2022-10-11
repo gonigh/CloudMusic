@@ -39,16 +39,13 @@ const pageStore = usePageStore();
 const state = reactive({
     songList: [],
     showSongList: [],
-    cardWidth: pageStore.clientWidth>1000?(pageStore.clientWidth - 160) / 5 + "px":(pageStore.clientWidth - 160) / 4 + "px",
 })
 
 const changeSongList = function () {
     let c_width = pageStore.clientWidth
     if (c_width > 1000) {
-        state.cardWidth = (c_width - 160) / 5 + "px";
         state.showSongList = state.songList
     } else {
-        state.cardWidth = (c_width - 160) / 4 + "px";
         state.showSongList = state.songList.slice(0, 8);
     }
 }
