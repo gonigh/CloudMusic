@@ -39,7 +39,7 @@ const pageStore = usePageStore();
 const state = reactive({
     songList: [],
     showSongList: [],
-    cardWidth: (pageStore.clientWidth - 160) / 5 + "px",
+    cardWidth: pageStore.clientWidth>1000?(pageStore.clientWidth - 160) / 5 + "px":(pageStore.clientWidth - 160) / 4 + "px",
 })
 
 const changeSongList = function () {
@@ -56,11 +56,11 @@ const changeSongList = function () {
 watch(() => pageStore.clientWidth, (value) => {
     changeSongList();
 })
-onMounted(() => {
-    getRecommendSongList(10).then(res => {
-        state.songList = res.data.result
-        changeSongList();
-    })
+
+onMounted(async () => {
+    const res = await getRecommendSongList(10);
+    state.songList = res.data.result;
+    changeSongList();
 })
 
 </script>

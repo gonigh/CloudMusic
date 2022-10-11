@@ -4,7 +4,9 @@
       <LeftNav></LeftNav>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <KeepAlive>
+        <router-view></router-view>
+      </KeepAlive>
     </div>
     <FooterMusic></FooterMusic>
   </div>
@@ -21,6 +23,7 @@ import FooterMusic from './components/FooterMusic.vue';
 import { onMounted, ref } from 'vue';
 import Music from './views/Music/index.vue';
 import { usePageStore } from './store/pageStore';
+import throttle from './utils/throttle';
 
 const musicStore = useMusicStore();
 const pageStore = usePageStore();
@@ -31,11 +34,13 @@ onMounted(() => {
 })
 
 // 存储当前窗口大小
-pageStore.updateSize(document.documentElement.clientWidth,document.documentElement.clientHeight);
+pageStore.updateSize(document.documentElement.clientWidth, document.documentElement.clientHeight);
 
-window.onresize=function(){
-  pageStore.updateSize(document.documentElement.clientWidth,document.documentElement.clientHeight);
+window.onresize = function () {
+  pageStore.updateSize(document.documentElement.clientWidth, document.documentElement.clientHeight);
 }
+
+window.onscroll = throttle(pageStore.loadLazyImg);
 
 </script>
 <style lang="less">
@@ -96,6 +101,4 @@ window.onresize=function(){
   --van-slider-button-background-color: red;
   --van-slider-bar-heigh: .04rem;
 }
-
-
 </style>

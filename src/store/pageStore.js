@@ -45,6 +45,15 @@ export const usePageStore = defineStore("page-store", {
       clientHeight: Number,
 
       homeActive: "recommend",
+
+      lazyDom: {
+        pageName: [
+          {
+            dom: HTMLElement,
+            url: String,
+          },
+        ],
+      },
     };
   },
   actions: {
@@ -60,21 +69,40 @@ export const usePageStore = defineStore("page-store", {
 
     /**
      * 更新窗口大小
-     * @param {*} width 
-     * @param {*} height 
+     * @param {*} width
+     * @param {*} height
      */
-    updateSize(width,height){
-      this.clientHeight=height;
-      this.clientWidth=width;
+    updateSize(width, height) {
+      this.clientHeight = height;
+      this.clientWidth = width;
     },
 
     /**
      * 主页面标签页跳转
-     * @param {*} value 
+     * @param {*} value
      */
-    updateHomeActive(value){
-      console.log(value)
+    updateHomeActive(value) {
       this.homeActive = value;
-    }
+    },
+
+    addLazyImg(value) {
+      if (this.lazyDom[this.homeActive]) {
+        this.lazyDom[this.homeActive].push(value);
+      } else {
+        this.lazyDom[this.homeActive] = [value];
+      }
+    },
+
+    loadLazyImg() {
+      while (this.lazyDom[this.homeActive] && this.lazyDom[this.homeActive].length != 0) {
+        let dom = this.lazyDom[this.homeActive][0].dom;
+        if (dom.getBoundingClientRect().top < this.clientHeight*1.5) {
+          dom.src = this.lazyDom[this.homeActive][0].url;
+          this.lazyDom[this.homeActive].shift();
+        } else {
+          break;
+        }
+      }
+    },
   },
 });
