@@ -34,7 +34,8 @@ const state = reactive({
  */
 onMounted(() => {
     let dom = document.getElementById(props.id);
-    let width = dom.parentElement.offsetWidth > 1000 ? dom.parentElement.offsetWidth / 5 : dom.parentElement.offsetWidth / 4;
+    let parentWidth = dom.parentElement.offsetWidth;
+    let width = parentWidth > 1000 ? parentWidth / 5 :parentWidth / 4;
     let img = dom.children[0];
     let name = dom.children[2];
     dom.style.height = `${width * 1.25}px`;

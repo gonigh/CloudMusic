@@ -79,7 +79,6 @@ import MyPopover from '../../components/MyPopover.vue';
 import PlayList from '../../components/PlayList.vue';
 import { usePageStore } from '../../store/pageStore';
 import throttle from '../../utils/throttle';
-import { storeToRefs } from 'pinia';
 
 const musicStore = useMusicStore();
 const pageStore = usePageStore();

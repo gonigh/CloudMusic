@@ -94,10 +94,14 @@ export const usePageStore = defineStore("page-store", {
     },
 
     loadLazyImg() {
-      while (this.lazyDom[this.homeActive] && this.lazyDom[this.homeActive].length != 0) {
+      while (
+        this.lazyDom[this.homeActive] &&
+        this.lazyDom[this.homeActive].length != 0
+      ) {
         let dom = this.lazyDom[this.homeActive][0].dom;
-        if (dom.getBoundingClientRect().top < this.clientHeight*1.5) {
-          dom.src = this.lazyDom[this.homeActive][0].url;
+        if (dom.getBoundingClientRect().top < this.clientHeight * 1.5) {
+          if (this.lazyDom[this.homeActive][0].url)
+            dom.src = this.lazyDom[this.homeActive][0].url;
           this.lazyDom[this.homeActive].shift();
         } else {
           break;

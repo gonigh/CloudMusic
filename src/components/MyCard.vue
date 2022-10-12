@@ -5,15 +5,9 @@
         </div>
         <div class="card-right">
             <slot name="top-right"></slot>
-            <!-- <text>更多</text>
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-youjiantou"></use>
-            </svg> -->
         </div>
     </div>
-    <div class="card-content">
-        <slot></slot>
-    </div>
+    <slot></slot>
 
 </template>
 
@@ -25,6 +19,7 @@ const props = defineProps({
         default: true
     }
 })
+console.log('card:setup')
 </script>
 <style lang="less" scoped>
 .card-top {
@@ -48,12 +43,5 @@ const props = defineProps({
         align-items: center;
         height: .8rem;
     }
-}
-
-.card-content {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 </style>

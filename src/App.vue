@@ -4,9 +4,7 @@
       <LeftNav></LeftNav>
     </div>
     <div class="content">
-      <KeepAlive>
-        <router-view></router-view>
-      </KeepAlive>
+      <router-view></router-view>
     </div>
     <FooterMusic></FooterMusic>
   </div>
@@ -40,7 +38,13 @@ window.onresize = function () {
   pageStore.updateSize(document.documentElement.clientWidth, document.documentElement.clientHeight);
 }
 
-window.onscroll = throttle(pageStore.loadLazyImg);
+window.onscroll = throttle(()=>{
+  pageStore.loadLazyImg();
+  // console.log(window.innerHeight,window.scrollY,document.body.scrollHeight)
+  // if(window.innerHeight+window.screenY>=window.outerHeight){
+  //   console.log("触底")
+  // }
+});
 
 </script>
 <style lang="less">
